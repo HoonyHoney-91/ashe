@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block navlogin %}
+{% if user == 'Login' %}
+<li><a class="dropdown-item" href="{{ url_for('login') }}">LOGIN</a></li>
+<li><a class="dropdown-item" href="{{url_for('signup')}}">SIGN UP</a></li>
+{% else %}
+<li><p class="dropdown-item">{{user}}</p></li>
+{% if check_user_admin %}
+<li><a class="dropdown-item" href="{{ url_for('post2_list_admin') }}">SUBMISSION LIST</a></li>
+<li><a class="dropdown-item" href="{{ url_for('front_page_update') }}">FRONT PAGE UPDATE</a></li>
+
+{% else %}
+<li><a class="dropdown-item" href="{{ url_for('user_post', uid=user) }}">MY SUBMISSION</a></li>
+{% endif %}
+<li><a class="dropdown-item" href="{{ url_for('logout') }}">LOGOUT</a></li>
+{% endif %}
+{% endblock %}
+
+{% block middle %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+      </ul>
+  {% endif %}
+{% endwith %}
+
+<h2>Front Page Update</h2>
+<form method="POST" action="{{ url_for('front_page_update') }}" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="file">Select Image:</label>
+        <input type="file" class="form-control-file" id="file" name="file" accept="image/jpeg, image/jpg, image/gif, image/png" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>
+
+{% endblock%}

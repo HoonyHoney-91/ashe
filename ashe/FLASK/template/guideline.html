@@ -1,0 +1,84 @@
+{% extends "base.html"%}
+
+{% block navlogin %}
+{% if user == 'Login' %}
+<li><a class="dropdown-item" href="{{ url_for('login') }}">LOGIN</a></li>
+<li><a class="dropdown-item" href="{{url_for('signup')}}">SIGN UP</a></li>
+{% else %}
+<li><p class="dropdown-item">{{user}}</p></li>
+{% if check_user_admin %}
+<li><a class="dropdown-item" href="{{ url_for('post2_list_admin') }}">SUBMISSION LIST</a></li>
+<li><a class="dropdown-item" href="{{ url_for('front_page_update') }}">FRONT PAGE UPDATE</a></li>
+{% else %}
+<li><a class="dropdown-item" href="{{ url_for('user_post', uid=user) }}">MY SUBMISSION</a></li>
+{% endif %}
+<li><a class="dropdown-item" href="{{ url_for('logout') }}">LOGOUT</a></li>
+{% endif %}
+{% endblock %}
+
+{% block picture %}
+<div class="img_div_welcome">
+    <img src="{{ url_for('static', filename='martins-zemlickis-NPFu4GfFZ7E-unsplash.jpg') }}" alt="" class="img_welcome">
+</div>
+{% endblock%}
+
+{% block middle %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+      </ul>
+  {% endif %}
+{% endwith %}
+<p>
+    <h2>
+        <center>The manuscript submission guidelines and writing principles</center> <br>
+        <center>for the Asian Society for Health and Exercise.  </center>
+    </h2>
+    <b>Outline of manuscript writing.</b>Text editing should be written in 10  point font size and human writing style, and the English should be  written in Times New Roman. The orientation of the paper should be  vertical. In particular, when creating a table, do not use functions  such as line drawing, create a table, and include figures within the  document as much as possible. Other matters, such as the size of  large and small titles, summaries in Korean and English, etc., are  arbitrarily determined by the author so that the contents can be  distinguished (batch editing during the publication process).
+    <b>In the first page of the cover page, </b>write the title of thesis, author  name, affiliated institution, position, address, contact information  (telephone, e-mail, etc.), and whether or not to receive research  funds. From the second chapter, personal information should not be  written, and should be edited with thesis title and main text.
+    <b>Thesis Publication Fee.</b>Thesis contributor must pay a review fee of  KRW 60,000 per paper (based on 10 pages) when submitting the  manuscript. If publication is confirmed after review, a publication fee  of 150,000 won per article must be paid. An additional printing fee  of KRW 30,000 per printed page exceeding the amount of  manuscript prescribed by the society must be paid (refer to the  journal manuscript writing regulations below). However, in the case  of papers that received research funding, the review fee is the  same, but a publication fee of KRW 300,000 per side is paid, and a  printing fee of KRW 30,000 per printed page exceeding the  manuscript size is additionally charged.
+    <b>Where to Receive Published Manuscripts.</b>Submitted manuscripts are,  in principle, submitted by email. However, if the online paper  submission and review system is applied, the procedure will be followed.
+    <b>Criteria for drafting.</b>Manuscripts should be prepared using the MS  Word program and submitted as final manuscripts. Papers should be  written in English. The English abstract should be less than 1,000  words and should be attached after the references. As a rule, the  length of the manuscript should be within 10 pages (including  references, abstracts, and appendices) prepared according to the  format, but if necessary, it cannot exceed a maximum of 4 pages.  Editing of the main body, abstract is all done in two columns, and  the following editing principles are followed.
+    <b>Title numbering system.</b>[I, II, III ... ] -> [1, 2, 3… ] -> [A, B, C] ->  [(1), (2), (3)… ] -> [(a), (b), (c)… ]  
+    <b>Quotation.</b>If the content to be quoted is short, it is written in the  text, and if the content is quoted more than 3 lines, it is written  separately from the main text. In case of separation from the main  text, the upper and lower parts of the quoted section are left blank  by one line in the main text and indented by 3 characters each on  the left and right sides.
+    <b>Footnotes and Endnotes. </b>Do not use footnotes, use endnotes  instead. Mark in the main text, but only for difficult supplementary  information or explanations, and use of endnotes that simply reveal  the source of data or references is prohibited. The position of the  endnote is marked with a serial number above the end of the  sentence or term, and the content of the endnote is listed  collectively before the references are presented.
+    <b>References in the text. </b>If the book or author's name appears in the  text, the year of publication is indicated in parentheses. If the cited  book or author's name does not appear in the text, put the author's  name and publication year in parentheses at the end of the relevant  part. When citing multiple documents in one item, separate the  documents with semicolons (;). ex) There are studies (Hong Gil-dong, 1996; Safrit, 1995). If there are multiple authors, write all  up to 3 authors, but if there are 4 or more, only the first author is  indicated, followed by 'et al.' in English. expressed in the form Ex)  Hong Gil-dong et al. (1996), Safeit et al. (1994). 
+    <b>References</b>are presented at the end of the dissertation as follows.  References were made to the literature of several countries. In the  case of Korean, Chinese, and Japanese Western books, they are listed  in order. Other references are written in accordance with the APA  format. English references Book names are written in italics. In the  thesis title, only the first word is capitalized and the rest of the  content is written in lowercase (same for books). Capitalize each  word in the title of the periodical.
+    <br>
+    <br>
+    <hr>
+    <h2>
+        <center>아시아건강운동학회 투고 요령, 원고 작성 원칙</center> 
+    </h2>
+    <b>원고작성 개요</b>본문 편집은 글자 크기 10 point, 휴먼명조체로 작성하며, 영문은 Times  New Roman 으로 작성한다. 용지방향은 세로로 하고, 특히 표를 만들 때는 선 긋기 등의  기능을 사용하지 말고 표 만들기에서 작성하고, 그림은 가능한 문서내에 포함시켜야 한다. 기타 큰 제목과 작은 제목의 크기, 국문 영문 요약 등 기타 사항은 내용에 구별이 가능하도 록 저자가 임의로 정한다(출판과정에서 일괄 편집).
+    <b>표지 작성</b>첫 장에는 논문명, 저자명, 소속기관명, 직위, 주소, 연락처(전화, E-Mail 등),  연구비 수혜 여부 등의 내용을 기술한다. 둘째 장부터 인적사항은 쓰지 않고, 논문 제목과  본문 내용으로 편집하여야 한다.
+    <b>논문 게재료</b>논문투고자는 논문 1편당(10쪽 기준) 심사료 60,000원을 원고 제출 시 납부해 야 한다. 심사 후 게재가 확정되면 편당 150,000원의 게재료를 납부하여야 한다. 학회가 규 정한 원고 분량을 초과한 인쇄 페이지당 30,000원씩의 인쇄비를 추가부담 하여야 한다(아 래 학회지 원고작성 규정 참고). 단, 연구비 수혜를 받은 논문일 경우에는 심사료는 동일하 되, 편당 300,000원의 게재료를 납부하고, 원고 분량을 초과한 인쇄 페이지당 30,000원씩 의 인쇄비를 추가부담 하여야한다.
+    <b>게재 원고 접수처</b>투고원고는 E-mail로 제출하는 것을 원칙으로 한다. 단 온라인논문투고  및 심사시스템이 적용될 경우에는 그 절차를 따른다.
+    <b>원고 작성 기준</b>MS 워드 프로그램으로 작성하여 최종 원고를 제출한다. 논문은 한글, 중국 어 사용을 원칙으로 하되, 의미에 혼동 가능성이 있는 경우에 한하여 한자로 표기하거나 ()  ) 속에 원어를 표기한다. 국문초록은 15행 이내로 하여 저자 성명 및 소속 다음 부분에 제 시한다. 영문초록은 1,000단어 이내로 하여 참고문헌 뒤에 붙인다. 원고 분량은 양식에 맞 추어 작성한 원고 10쪽 이내(참고문헌, 영문초록, 부록 포함)를 원칙으로 하되, 필요한 경 우 최대 4쪽을 초과할 수 없다. 본문, 영문초록, 국문초록의 편집은 모두 2단 편집으로 하 고 다음과 같은 편집 원칙에 따른다.
+    <b>제목 번호 체계</b>[I,II, III...] → [1, 2, 3...] → [가, 나, 다] → [(1), (2), (3)...] →  [(가), (나), (다)...] 
+    <b>인용</b>인용하는 내용이 짧은 경우에는 본문 속에 기술하고, 3행 이상으로 인용 내용이 많은  경우 본문과 분리해서 기술한다. 본문과 분리하는 경우에는 인용 부분의 아래 위를 본문에 서 한 줄씩 비우고 좌우로 각각 3글자씩 들여 쓴다.
+    <b>각주와 후주</b>각주(footnote)의 사용을 금하고, 그 대신 후주(endnote)를 사용한다. 본문에  표기하되 어려운 보충 내용이나 설명에 한하고, 단순히 자료의 출처나 참고문헌을 밝히는  후주의 사용은 금한다. 후주의 표시 위치는 해당 문장이나 용어 말미의 위편에 일련번호로  표시하고, 후주의 내용은 참고문헌을 제시하기 전에 일괄적으로 싣는다. 
+    <b>본문 내용의 참고문헌</b>인용하는 저서나 저자명이 본문에 나타나는 경우는 괄호 속에 발행 연도를 표시한다. 인용하는 저서나 저자명이 본문에 나타나지 않는 경우에는 해당 부분 말미 에 괄호를 치고 그 속에 저자명과 발행연도를 표시한다. 하나의 사항에 여러 문헌을 인용하 는 경우에 문헌들 사이에 쌍반점(;)으로 가른다. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;예)…라고 주장하고 있다(홍길동, 1996) <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...연구들이 있다(홍길동, 1996; Safrit, 1995). <br>
+    저자가 다수일 경우 3인 까지는 모두 표기하되, 4인 이상은 첫 번째 저자만 나타내고 그 다음은 국문의 '○○○ 외', 영문은 'et al.' 형 식으로 나타낸다. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;예) 홍길동 외(1996), Safeit et al.(1994).
+    <b>참고문헌 작성</b>논문의 말미에 아래와 같은 요령으로 제시한다. 여러 나라 문헌을 참고했을 경우 한·중·일 서양서 순으로 열거한다. 기타 참고문헌 작성법은 APA 양식에 따른다. 단행 본의 경우 / 강상조(1994). 체육통계. 서울: 21세기교육사. 정기간행물 속의 논문의 경우 (반드시 해당 페이지를 밝힐 것) / 윤승호(1998). 체력측정을 위한 준거지향 기준설정과 타 당성검증에 관한 연구. 한국체육학회지, 37(2), 399-413. 학위논문의 경우 / 조기정 (1996). 농구자유투 검사에서 축차 확률비검사의 유용성 검증. 미간행 박사학위 논문. 서울 대학교. 
+    <b>영문 참고문헌</b>도서명은 이탤릭체로 표기. 논문 제목은 첫 단어만 대문자 나머지 내용은 모 두 소문자로 표기(단행본의 경우도 동일). 정기간행물명은 각 단어를 대문자로 표기(다음  예시 참조). <br>
+    <br>
+    <p>
+        Baumgartner, T. A., &Jackson, A. S. (1995). Measurement for evaluation in physical  education and exercise science. Wisconsin:Brown & Benchmark. <br>
+        Safrit, M. J., Zhu, W., &Stiegelmeier, J. (1990). The context of measurement  instruction in physical education. Research Quarterly for Exercise and Sport, 61,  291-29. <br>
+    </p>
+    <br>
+    <br>
+    -(아시아건강운동학회 편집국) <br>
+    Email: jounal.of.ASHE.edit@gmail.com, <br>
+    전화: (031) 8020-3384(박지훈 편집국장) <br>
+
+    
+</p>
+{% endblock%}

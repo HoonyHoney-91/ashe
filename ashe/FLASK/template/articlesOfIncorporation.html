@@ -1,0 +1,256 @@
+{% extends "base.html"%}
+
+{% block navlogin %}
+{% if user == 'Login' %}
+<li><a class="dropdown-item" href="{{ url_for('login') }}">LOGIN</a></li>
+<li><a class="dropdown-item" href="{{url_for('signup')}}">SIGN UP</a></li>
+{% else %}
+<li><p class="dropdown-item">{{user}}</p></li>
+{% if check_user_admin %}
+<li><a class="dropdown-item" href="{{ url_for('post2_list_admin') }}">SUBMISSION LIST</a></li>
+<li><a class="dropdown-item" href="{{ url_for('front_page_update') }}">FRONT PAGE UPDATE</a></li>
+{% else %}
+<li><a class="dropdown-item" href="{{ url_for('user_post', uid=user) }}">MY SUBMISSION</a></li>
+{% endif %}
+<li><a class="dropdown-item" href="{{ url_for('logout') }}">LOGOUT</a></li>
+{% endif %}
+{% endblock %}
+
+{% block picture %}
+<div class="img_div_welcome">
+    <img src="{{ url_for('static', filename='martins-zemlickis-NPFu4GfFZ7E-unsplash.jpg') }}" alt="" class="img_welcome">
+</div>
+{% endblock%}
+
+{% block middle %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+      </ul>
+  {% endif %}
+{% endwith %}
+<p>
+    <h2>
+        <center>Asian Society for Health and Exercise Articles of Incorporation</center>
+    </h2><br>
+    <br>
+    <h4>
+        Chapter 1 General Provisions
+    </h4>
+    <b>Article 1 (Name)</b>This society is called the Asian Society for Health and Exercise (ASHE).
+    <b>Article 2 (Purpose)</b>The purpose of this society is to promote academic development of health and kinematics by encouraging research activities of members, and to contribute to the improvement of Asian health.
+    <b>Article 3 (Location of office)</b>In principle, the office of this society is located in the school where the president is in office. <br>
+    <br>
+    <h4>
+        Chapter 2 Projects
+    </h4>
+    <b>Article 4 (Types of Projects)</b> To achieve the purpose of this society, the following projects are implemented. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. Academic activities related to health and kinesiology research <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. Collection and exchange of related academic information <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. Publication of the journal <br>
+    <b>Article 5 (Holding of seminars and workshops)</b>The following regular academic conferences are held for academic activities and support activities. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. The principle is to hold a regular academic conference once a year. Non-regular academic conferences are held from time to time as needed. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. Seminars and workshops can be held. <br>
+    <br>
+    <h4>
+        Chapter 3 Members
+    </h4>
+    <b>Article 6 (Qualifications of Members)</b> Members of this society must agree to the purpose of this society and go through the prescribed admission process.
+    <b>Article 7 (Rights of Members)</b> Members of this society have the following rights. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. Exercising the right to speak and vote at the general meeting <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. The right to participate in projects hosted, supervised, and approved by the society <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. The right to vote and stand for election as executives of the society <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. The right to subscribe to newsletters and academic journals published by the society <br>
+    <b>Article 8 (Duty of members)</b> Members of this society have the following responsibilities: <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. Compliance with the Articles of society and various regulations of this society <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. Payment of prescribed membership fees set by this society <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. Implementation of matters resolved by this society <br>
+    <b>Article 9 (Commendation and Discipline of Members)</b>Among the members of this society, the following conditions apply Commendation and disciplinary action may be given to members who do so. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. Members, related parties, and organizations that have contributed to the development of this society may be commended by a resolution of the general meeting. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. Members who have violated the purpose of this society or have acted to damage honor and prestige may be expelled by a resolution of the general meeting. <br>
+    <b>Article 10 (Withdrawal of members)</b> Members of this society may withdraw from this society at will.
+    <b>Article 11 (Loss of Membership Qualifications)</b> Members who have not paid the annual membership fee for two years or more lose their membership qualifications. <br>
+    <br>
+    <h4>
+        Chapter 4 Executives
+    </h4>
+    <b>Article 12 (Executives and Advisors) </b> This society has the following executives. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. Executives of this society are the president, vice president, executive director, director and auditor <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. The president can appoint an honorary president and advisors. <br>
+    <b>Article 13 (Secretariat)</b> This society has a secretariat as an administrative agency. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. The Secretariat shall have a Secretary General and a secretary. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. The secretary general is appointed by the president with the consent of the board of directors. <br>
+    <b>Article 14 (Appointment and dismissal of executives)</b>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. The president is elected at the general meeting. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. The president appoints the vice-president, executive director, and directors from among the members. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. The auditor is a person who has the qualifications of a member and is appointed in a general meeting. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. The dismissal of an executive before the term of office shall be resolved at the general meeting. <br>
+    <b>Article 15 (Executives' Duties)</b>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. The president represents the society, oversees meetings, convenes all meetings, and becomes its chairman. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. The vice-president assists the president and performs the duties on behalf of the president in the absence of the president. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. Directors deliberate on the overall execution of the meeting, and plan and promote the business of this meeting. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. The auditor audits the business and accounting of this meeting and reports to the general meeting. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. The secretary general oversees the affairs of the secretariat under the direction and supervision of the president. <br>
+    <b>Article 16 (Term of office of officers)</b>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. The term of office of officers shall be 4 years. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. When a vacancy occurs in an executive, supplementary elections are made at the next general meeting, and the term of office of an executive appointed by the supplementary election shall be the remaining period of the predecessor. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. Even if the term of office expires, executives shall perform their duties until a successor is appointed. <br>
+    <br>
+    <h4>
+        Chapter 5 Meetings
+    </h4>
+    <b>Article 17 (Types of meetings)</b> Meetings of this society are held at the general meeting and the board of directors.
+    <b>Article 18 (Calling of meetings)</b>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. The regular general meeting is convened by the president once a year. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. An extraordinary general meeting is convened when the president deems it necessary or when more than 1/5 of the members request it. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. The board of directors convenes when the president deems it necessary. <br>
+    <b>Article 19 (Functions of the general meeting)</b> The general meeting resolves the following matters.
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. Revision of the Articles of Incorporation <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. Project planning and execution <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. Budget and settlement of accounts <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. Commendation, discipline, and expulsion of members <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. Election of executives <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6. Other major matters <br>
+    <b>Article 20 (Composition of the board of directors)</b> It is composed of executive directors and directors.
+    <b>Article 21 (Functions of the board of directors)</b> The board of directors deliberates on the following matters.
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. Revision of the Articles of Incorporation <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. Business plan <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. Budget and settlement of accounts <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. Commendation, disciplinary action, and expulsion of members <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. Other major matters <br>
+    <b>Article 22 (Quorum for opening and voting)</b> All meetings are held with a quorum of present members, and the amendment to the articles of incorporation Decisions on agendas other than the the chapter decides However, amendments to the Articles of Incorporation shall be resolved with the consent of at least 2/3 of the members present. <br>
+    <br>
+    <h4>
+        Chapter 6 Finance and Accounting
+    </h4>
+    <b>Article 23 (Financial Resources)</b> The finances of this society are covered by annual membership fees, contributions, and other revenues.
+    <b>Article 24 (Membership Fees)</b> Membership fees for this society are determined by the resolution of the board of directors.
+    <b>Article 25 (Expenditures)</b> In principle, the funds prepared for this society are used for expenses for publication of journals and dissemination of materials, and in case of special events, they can be spent under the approval of the board of directors.
+    <b>Article 26 (Fiscal Year)</b> The fiscal year of this society is based on the date of the regular general meeting. <br>
+    <br>
+    <h4>
+        Chapter 7 Supplement
+    </h4>
+    <b>Article 27 (Amendment of Articles of Incorporation)</b> In order to amend the articles of incorporation of this meeting, a 2/3 majority of the members present at the general meeting must be approved.
+    <b>Article 28 (Detailed Rules for Enforcement)</b> Matters necessary for the enforcement of these articles of incorporation shall be determined by the president, but must be approved by the general meeting. <br>
+    <br>
+    <h4>
+        Chapter 8 Supplementary Provisions
+    </h4>
+    <b>Article 1 (Effective Date)</b> These Articles of Incorporation shall enter into force from the date of approval at the general meeting.
+</p>
+<hr>
+<p>
+    <h2>
+        <center>아시아건강운동학회 정관</center>
+    </h2><br>
+    <br>
+    <h4>
+        제 1 장 총칙
+    </h4>
+    <b>제1조 (명칭)</b>본 회는 아시아건강운동학회(Asian Society for Health and Exercise : ASHE)라 칭한다.
+    <b>제2조 (목적)</b>본 회는 회원들의 연구활동을 장려하여 건강과 운동학의 학문적 발전을 도모하고 나아가 아시아인의 건강개선에 기여함을 목적으로 한다. 제3조 (사무소의 소재지) 본 회의 사무소는 회장의 재임 교에 두는 것을 원칙으로 한다.
+    <b>제3조 (사무소의 소재지)</b>본 회의 사무소는 회장의 재임 교에 두는 것을 원칙으로 한다.<br>
+    <br>
+    <h4>
+        제 2 장 사업
+    </h4>
+    <b>제4조 (사업의 종류) </b>본 회의 목적 달성을 위하여 다음과 같은 사업을 실시한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 건강 및 운동학 연구에 관련된 학술활동<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 관련 학술 정보의 수집 및 교환<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 회지 및 학술지의 발간<br>
+    <b>제5조 (세미나 및 워크샵 개최)</b>학술활동 및 지원활동을 위해 다음과 같은 정기학술대회를 개최한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 정기학술대회는 연1회 개최하는 것을 윈칙으로 한다. 필요에 따라 비정기학술대회를 수시 개최한다. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 세미나와 워크샵을 개최할 수 있다.<br>
+    <br>
+    <h4>
+        제 3 장 회원
+    </h4>
+    <b>제6조 (회원의 자격)</b> 본 회의 회원은 본 회의 목적에 동의하고 소정의 입회 절차를 거친사람으로 한다. 
+    <b>제7조 (회원의 권리)</b> 본 회의 회원은 다음과 같은 권리를 가진다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 총회에서 발언권과 의결권 행사<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 본 회가 주최, 주관, 승인하는 사업에 참여할 권리<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 본 회의 임원 선거권 및 피선거권<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. 본 회에서 발간하는 회보 및 학술지 구독권<br>
+    <b>제8조 (회원의 의무)</b> 본 회의 회원은 다음과 같은 의무를 갖는다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.  본 회의 정관 및 각종 규정의 준수<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 본 회가 정한 소정의 회비 납부<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 본 회에서 결의한 사항의 이행<br>
+    <b>제9조 (회원의 표창 및 징계)</b>본 회의 회원 중 다음과 같은 조건에 해당하는 회원에 대해서 표창 및 징계를 줄 수 있다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 본 회의 발전에 공로가 있는 회원이나 관계자 및 단체에 대하여 총회의 의결로 표창할 수 있다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 본 회의 목적에 위배되거나 명예와 위신에 손상을 가져오는 행위를 한 회원은 총회의 의결로 제명할 수 있다. <br>
+    <b>제10조 (회원의 탈퇴)</b> 본 회의 회원은 본 회를 임의로 탈퇴할 수 있다.
+    <b>제11조 (회원자격의 상실)</b> 연 회비를 2년 이상 미납한 회원은 회원의 자격을 상실한다.<br>
+    <br>
+    <h4>
+        제 4 장 임원 
+    </h4>
+    <b>제12조 (임원 및 고문)</b> 본 회는 다음과 같은 임원을 둔다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 본회의 임원은 회장, 부회장, 상임이사, 이사 및 감사로 한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 회장은 명예회장, 고문을 위촉할 수 있다.<br>
+    <b>제13조 (사무국)</b> 본 회에 사무집행기관으로 사무국을 둔다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 사무국에 사무국장과 간사를 둔다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 사무국장은 이사회의 동의를 얻어 회장이 임명한다.<br>
+    <b>제14조 (임원의 선임과 해임)</b>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 회장은 총회에서 선출한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 회장은 회원중에서 부회장, 상임이사, 이사를 선임한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 감사는 회원의 자격을 가진 자로서 2인으로 하며, 총회에서 선임한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. 임기 전 임원의 해임은 총회에서 의결한다.<br>
+    <b>제15조 (임원의 임무)</b>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 회장은 본 회를 대표하고 회의를 총괄하며, 제 회의를 소집하고 그 의장이 된다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 부회장은 회장을 보좌하고 회장 유고 시 그 직무를 대행한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 이사는 회의집행 전반에 걸쳐 심의하며, 본 회의 사업을 기획하고 추진한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. 감사는 본 회의 사업과 회계를 감사하며 총회에 보고한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. 사무국장은 회장의 지휘, 감독을 받아 사무국의 사무를 관장한다.<br>
+    <b>제16조 (임원의 임기)</b>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 임원의 임기는 4년으로 한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 임원의 결원이 발생하였을 때는 차기 총회에서 보선하며 보선에 의해 선임된 임원의 임기는 전임자의 잔여 기간으로 한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 임원은 임기가 종료되더라도 후임자가 선임될 때까지 그 직무를 수행한다.<br>
+    <br>
+    <h4>
+        제 5 장 회의
+    </h4>
+    <b>제17조 (회의의 종류)</b>본 회의 회의는 총회 및 이사회로 한다. 
+    <b>제18조 (회의의 소집)</b>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 정기총회는 연 1회 회장이 소집한다. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 임시총회는 회장이 필요하다고 인정되거나, 회원 1/5이상이 요청할 때 소집한다. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 이사회는 회장이 필요하다고 판단할 경우 소집한다. <br>
+    <b>제19조 (총회의 기능) </b> 총회는 다음 사항을 의결한다. 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 정관의 개정<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 사업의 계획과 집행<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 예산과 결산<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. 회원의 표창, 징계, 제명<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. 임원의 선출<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6. 기타 주요 사항<br>
+    <b>제20조 (이사회의 구성)</b> 이사회는 회장, 부회장, 상임이사 및 이사로 구성한다.
+    <b>제21조 (이사회의 기능)</b> 이사회는 다음 사항을 심의한다.
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 정관의 개정<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 사업의 계획<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 예산과 결산<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. 회원의 표창, 징계, 제명<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. 기타 주요 사항<br>
+    <b>제22조 (개회 및 의결 정족수)</b> 모든 회의의 개최 정족수는 출석회원으로 하고 정관 개정안을 제외한 안건에 대한 의결은 참석회원 과반수의 찬성으로 가능하며, 가부 동수인 경우 의장이 결정한다. 단, 정관개정은 출석회원 3분의 2이상의 찬성으로 의결한다. <br>
+    <br>
+    <h4>
+        제 6 장 재정 및 회계
+    </h4>
+    <b>제23조 (재원)</b> 본 회의 재정은 연회비, 찬조금, 기타 수익금으로 충당한다. 
+    <b>제24조 (회비)</b> 본 회의 회비는 이사회의 결의에 의한다. 
+    <b>제25조 (지출)</b> 본 회에 마련된 재원은 학술지 발간과 자료 보급을 위한 경비로 사용함을 원칙으로 하며, 특별한 행사가 있을 경우 이사회의 승인 하에 지출할 수 있다. 
+    <b>제26조 (회계 년도)</b> 본 회의 회계연도는 정기 총회 일을 기준으로 한다. <br>
+    <br>
+    <h4>
+        제 7 장 보칙
+    </h4>
+    <b>제27조 (정관 개정)</b> 본 회의 정관을 개정하고자 할 때는 총회 참석회원 2/3이상의 찬성을 얻어야 한다. 
+    <b>제28조 (시행 세칙)</b> 본 정관의 시행에 필요한 사항은 회장이 정하되 총회의 승인을 받아야 한다. <br>
+    <br>
+    <h4>
+        제 8 장 부칙
+    </h4>
+    <b>제1조 (시행일)</b> 본 정관은 총회의 의결을 거친 날로부터 시행한다.
+</p>
+{% endblock%}

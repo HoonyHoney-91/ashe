@@ -1,0 +1,67 @@
+{% extends "base.html"%}
+{% block navlogin %}
+{% if user == 'Login' %}
+<li><a class="dropdown-item" href="{{ url_for('login') }}">LOGIN</a></li>
+<li><a class="dropdown-item" href="{{url_for('signup')}}">SIGN UP</a></li>
+{% else %}
+<li><p class="dropdown-item">{{user}}</p></li>
+{% if check_user_admin %}
+<li><a class="dropdown-item" href="{{ url_for('post2_list_admin') }}">SUBMISSION LIST</a></li>
+<li><a class="dropdown-item" href="{{ url_for('front_page_update') }}">FRONT PAGE UPDATE</a></li>
+{% else %}
+<li><a class="dropdown-item" href="{{ url_for('user_post', uid=user) }}">MY SUBMISSION</a></li>
+{% endif %}
+<li><a class="dropdown-item" href="{{ url_for('logout') }}">LOGOUT</a></li>
+{% endif %}
+{% endblock %}
+
+{% block picture %}
+<div class="img_div_welcome">
+    <img src="{{ url_for('static', filename='martins-zemlickis-NPFu4GfFZ7E-unsplash.jpg') }}" alt="" class="img_welcome">
+</div>
+{% endblock%}
+
+{% block middle %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+      </ul>
+  {% endif %}
+{% endwith %}
+<p>
+    <h2>
+        <b><center>The review guidelines for the Journal of Asian Society for Health and Exercise.</center></b>
+    </h2>
+    <p>
+        <b>The Journal of Asian Society for Health and Exercise</b>is published four times a year (March, June, September, December). The Asian Society of Health and Exercise Society publishes papers dealing with the content of comprehensive research on Asian health, physical education, field application research, introduction of new theories and methods, and existing theories and methods, and is published for the purpose of promoting academic and practical development in these fields. All authors of submitted manuscripts must be members, and manuscripts once received are not returned in principle. Manuscripts submitted for publication are accepted at any time and edited and published as manuscripts that have been reviewed according to the publication schedule. As a rule, manuscripts contributed to the Asian Society for Health and Exercise should not be published at other journals. Depending on the manuscript, it can be divided into original, review, and tutorial.<br>
+        <br>
+        <b>Thesis submission period and thesis review</b> The Asian Society of Health and Exercise Society accepts occasional submissions a year, in principle. Considering the expected period from thesis review to publication of the journal, the thesis review begins only for papers submitted by February 15 (March 31 publication), May 15 (June 30 publication), August 15 (September 30 publication), November 15 (published on December 31), and papers submitted after that time are reviewed in the second issue. If necessary, editor may consult with the thesis submitter to revise or supplement the contents of the submitted thesis.<br>
+        <br>
+        <b>Selection of reviewers and sending of reviewers For thesis review.</b> The editor-in-chief of the journal selects two reviewers in consideration of the major field of the submitted thesis, and selects an anonymous thesis to review excluding the personal information of the thesis submitter.<br>
+        <br>
+        <b>Review and notification of results.</b> Thesis review follows the principle of a consensus system of two judges. If one judge decides that the paper cannot be published, the paper is determined not to be published in the published journal. If the manuscript is judged to be published after revision, the reviewer's revision order is mailed to the author, and the manuscript is judged as the final manuscript through the secondary or tertiary screening process.<br>
+        <br>
+        <b>Contents of Review.</b> The content of the thesis review is graded A, B, C, or D on the creativity of the research thesis, the suitability of the thesis system and format, the logic and concreteness of the research contents and statements, the validity of the research method, and the degree of contribution to academic development.<br>
+    </p>
+</p>
+<hr>
+<p>
+    <h2>
+        <b><center>아시아건강운동학회지 심사규정</center></b>
+    </h2>
+    <p>
+        <b>아시아건강운동학회지</b>는 연 4회 발행한다(3월, 6월, 9월, 12월). 아시아건강운동학회지는 통칭 아시아건강, 체육, 현장적용 연구, 또는 새로운 이론과 방법의 소개, 기존 이론과 방법에 대한 통합적 연구 내용을 다룬 논문을 게재하고 이들 분야의 학문적 실용적 발전을 도모할 목적으로 출간된다. 투고 원고 중 모든 저자는 반드시 회원이어야 하며, 일단 접수된 원고는 원칙적으로 반환하지 않는다. 게재 응모원고는 수시 접수하고 출간일정에 따라 심사완료된 원고로 편집 출간한다. 아시아건강운동학회지 기고 원고는 발표되지 않는 것을 원칙으로 하며, 여타 학회지에 기고 또는 투고한 논문이나 학위논문 요약본은 싣지 않는다. 원고에 따라서는 일반(Original), 고찰(Review), 튜토리얼(Tutorial)로 구분할 수도 있다.<br>
+        <br>
+        <b>논문투고 기간 및 논문심사</b> 아시아건강운동학회지는 연중 365일 수시투고를 원칙으로 한다. 논문심사는 논문심사에서 학회지 발행까지의 예상기간을 고려하여 2월 15일(3월 31일발행), 5월 15일(6월 30일 발행), 8월 15일(9월 30일 발행), 11월 15일(12월 31일 발행)까지 투고된 논문에 한하여 해당 심사를 시작하며, 그 이후에 투고된 논문에 대해서는 차호로 심사하는 것을 원칙으로 한다. 필요한 경우 제출된 논문의 내용수정 보완을 논문 제출자와 협의할 수도 있다. <br>
+        <br>
+        <b>심사위원 선정 및 심사원고 발송</b> 논문 심사는 학회지 편집위원장이 접수된 논문의 전공 영역을 고려, 심사위원(reviewer) 2인을 선정하고, 논문 제출자의 인적사항 부분을 제외한 익명의 심사용 논문을 선정된 심사위원에게 발송한다. <br>
+        <br>
+        <b>심사 및 결과 통보</b> 논문심사는 2명의 심사위원 합의제 원칙을 따른다. 1명의 심사위원이 게재 불가로 판정할 경우 해당 논문은 당해 발행 논문집에는 게재 불가로 판정한다. 수정 후게재로 판정 받을 경우 심사위원 수정 지시서를 저자에게 우송하고 2차 또는 3차 심사과정을 거쳐 최종 게재 원고로 판정한다. <br>
+        <br>
+        <b>심사내용</b> 논문 심사 내용은 연구논문의 창의성, 논문체제 및 형식의 적합성, 연구내용과 진술의 논리성 및 구체성, 연구방법의 타당성, 학문발전과 실천에 기여도를 A, B, C, D등급으로 심사한다.<br>
+    </p>
+</p>
+{% endblock%}

@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% block navlogin %}
+{% if user == 'Login' %}
+<li><a class="dropdown-item" href="{{ url_for('login') }}">LOGIN</a></li>
+<li><a class="dropdown-item" href="{{url_for('signup')}}">SIGN UP</a></li>
+{% else %}
+<li><p class="dropdown-item">{{user}}</p></li>
+{% if check_user_admin %}
+<li><a class="dropdown-item" href="{{ url_for('post2_list_admin') }}">SUBMISSION LIST</a></li>
+<li><a class="dropdown-item" href="{{ url_for('front_page_update') }}">FRONT PAGE UPDATE</a></li>
+{% else %}
+<li><a class="dropdown-item" href="{{ url_for('user_post', uid=user) }}">MY SUBMISSION</a></li>
+{% endif %}
+<li><a class="dropdown-item" href="{{ url_for('logout') }}">LOGOUT</a></li>
+{% endif %}
+{% endblock %}
+
+{% block middle %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+      </ul>
+  {% endif %}
+{% endwith %}
+<div class="board_wrap">
+    <div class="board_title">
+        <h1>PAPER SEARCH</h1>
+        <p>This is the list of Published Paper</p>
+    </div>
+    <div class="row board_list_wrap">
+        <div class="board_list">
+            <div class="row top">
+                <div class="col-1 num">Number</div>
+                <div class="col-1 num">Vol.</div>
+                <div class="col-1 num">No.</div>
+                <div class="col-4 title">Title</div>
+                <div class="col-2 writer">Author</div>
+                <div class="col-3 date">Date</div>
+            </div>
+
+            {% set current_page = current_page %}
+            {% for post in post2_list|reverse %}
+                {% set post_index = -1*((total_posts - (current_page - 1) * posts_per_page - loop.revindex) - total_posts) %}
+                <div class="row post">
+                    <div class="col-1 num">{{ post_index }}</div>
+                    <div class="col-1 num">{{ post[1].volume }}</div>
+                    <div class="col-1 num">{{ post[1].number }}</div>
+                    <div class="col-4 title"><a href="{{ url_for('post', post_id=post[0]) }}" data-post-id="{{ post[0] }}">{{ post[1].title }}</a></div>
+                    <div class="col-2 writer">{{ post[1].author }}</div>
+                    <div class="col-3 date">{{ post[1].date_posted }}</div>
+                </div>
+            {% endfor %}
+
+        </div>
+        <div class="board_page">
+            {% set current_page = request.args.get('page', 1, type=int) %}
+
+            {% if current_page < total_pages %}
+            <a href="{{ url_for('post2_list', page=total_pages) }}" class=""><<</a>
+            {% endif %}
+
+            {% for page in range(total_pages, 0, -1) %}
+                {% if page == current_page %}
+                    <a href="{{ url_for('post2_list', page=page) }}" class="num cur">{{ page }}</a>
+                {% else %}
+                    <a href="{{ url_for('post2_list', page=page) }}" class="num">{{ page }}</a>
+                {% endif %}
+            {% endfor %}
+
+
+            {% if current_page < total_pages %}
+                <a href="{{ url_for('post2_list', page=1) }}" class="bt">>></a>
+            {% endif %}
+        </div>
+        <br>
+        <br>
+
+        <div id="postContainer">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+                        Search by
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><button class="dropdown-item" id="searchByTitle">Title</a></li>
+                        <li><button class="dropdown-item" id="searchByAuthor">Author</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="Search" id="searchText">
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-secondary btn-block" id="searchButton">Search Results</button>
+                </div>
+            </div>
+
+            <div id="postList" class="mt-2">
+                <!-- Search results will be displayed here -->
+            </div>
+        </div>
+        
+        
+        <div class="bt_wrap py-2">
+            {% if check_user_admin %}
+                <a href="{{ url_for('write2') }}" class="">New Post</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const searchByTitle = document.getElementById('searchByTitle');
+        const searchByAuthor = document.getElementById('searchByAuthor');
+        const searchText = document.getElementById('searchText');
+        const searchButton = document.getElementById('searchButton');
+        const postList = document.getElementById('postList');
+        const dropdownMenuButton = document.getElementById('dropdownMenuButton');
+
+        let searchType = 'title';  // Default search type is 'title'
+
+        // Event listeners for selecting search type
+        searchByTitle.addEventListener('click', () => {
+            searchType = 'title';
+            searchByTitle.classList.add('active');
+            searchByAuthor.classList.remove('active');
+            dropdownMenuButton.textContent = 'Title';
+        });
+
+        searchByAuthor.addEventListener('click', () => {
+            searchType = 'author';
+            searchByTitle.classList.remove('active');
+            searchByAuthor.classList.add('active');
+            dropdownMenuButton.textContent = 'Author';
+        });
+
+
+        // Event listener for search button
+        searchButton.addEventListener('click', () => {
+            const searchValue = searchText.value.trim();
+
+            if (searchValue !== '') {
+                const url = `/search?type=${searchType}&text=${encodeURIComponent(searchValue)}`;
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        // Handle search results here
+                        console.log(data);
+                        if (data && data.length > 0) {
+                            // Clear existing post list
+                            postList.innerHTML = '';
+
+                            // Create new HTML elements for each post
+                            data.forEach(post => {
+                                const postItem = document.createElement('div');
+                                postItem.classList.add('row', 'post');
+                                postItem.dataset.postId = post.post_id;
+                                postItem.innerHTML = `
+                                <div class="col-1 num"><b>Vol.</b></div>
+                                <div class="col-1 num"><b>No.</b></div>
+                                <div class="col-5 title"><b>Title</b></div>
+                                <div class="col-2 writer"><b>Author</b></div>
+                                <div class="col-3 date"><b>Date</b></div>
+                                    <div class="col-1 num">${post.volume}</div>
+                                    <div class="col-1 num">${post.number}</div>
+                                    <div class="col-5 title">
+                                        <a href="/post/${post.post_id}" data-post-id="${post.post_id}">${post.title}</a>
+                                    </div>
+                                    <div class="col-2 writer">${post.author}</div>
+                                    <div class="col-3 date">${post.date_posted}</div>
+                                `;
+
+                                // Append the post item to the post list
+                                postList.appendChild(postItem);
+                            });
+
+                            // Add click event listener to post links
+                            document.addEventListener('DOMContentLoaded', () => {
+                            const postList = document.getElementById('postList');
+                            console.log(postList);
+                        });
+                        } else {
+                            // If no search results found, display a message
+                            postList.innerHTML = '<p>No search results found.</p>';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                }
+            });
+        });
+</script>
+
+
+
+{% endblock %}

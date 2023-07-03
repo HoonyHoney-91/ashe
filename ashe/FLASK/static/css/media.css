@@ -1,0 +1,44 @@
+
+
+/* need to remove all "row" class from all div
+
+window.addEventListener("resize", function() {
+    if (window.innerWidth < 500) resize.classList.remove("row");
+  }); */
+
+
+@media (max-width: 1000px){
+    .container .row .board_wrap{
+        width: 100%;
+        min-width: 320px;
+        box-sizing: border-box;
+    }
+    .board_list .num,
+    .board_list .writer,
+    .board_list .views{
+        display: none;
+    }
+    .board_list .date{
+        width: 40%;
+    }
+    .board_list .title{
+        text-indent: 10px;
+    }
+    .board_list .top .title{
+        text-indent: 0px;
+    }
+    .board_page a{
+        width: 26px;
+        height: 26px;
+    }
+    .board_view .info .col{
+        padding: 0;
+    }
+    .board_view .info .col dl{
+        width: 49%;
+        padding: 0;
+    }
+    .board_view .info .col dl::before{
+        display: none;
+    }
+}

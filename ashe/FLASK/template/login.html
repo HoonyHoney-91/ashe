@@ -1,0 +1,57 @@
+{% extends "base.html"%}
+
+{% block navlogin %}
+{% if user == 'Login' %}
+<li><a class="dropdown-item" href="{{ url_for('login') }}">LOGIN</a></li>
+<li><a class="dropdown-item" href="{{url_for('signup')}}">SIGN UP</a></li>
+{% else %}
+<li><p class="dropdown-item">{{user}}</p></li>
+{% if check_user_admin %}
+<li><a class="dropdown-item" href="{{ url_for('post2_list_admin') }}">SUBMISSION LIST</a></li>
+<li><a class="dropdown-item" href="{{ url_for('front_page_update') }}">FRONT PAGE UPDATE</a></li>
+{% else %}
+<li><a class="dropdown-item" href="{{ url_for('user_post', uid=user) }}">MY SUBMISSION</a></li>
+{% endif %}
+<li><a class="dropdown-item" href="{{ url_for('logout') }}">LOGOUT</a></li>
+{% endif %}
+{% endblock %}
+
+{% block middle %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+      </ul>
+  {% endif %}
+{% endwith %}
+
+<section class="text-center">
+    <form action="{{url_for('login_done')}}" method="GET" class="form-signin">
+        <img class="mb-4" src="{{ url_for('static', filename='ashe_logo_1.png') }}" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">
+            Please sign in
+        </h1>
+        <label for="inputEmail" class="sr-only">
+            ID
+        </label>
+        <input type="text" name="id" id="id" class="form-control" placeholder="ID" required="" autofocus="">
+        <label for="pwd" class="sr-only">
+            Password
+        </label>
+        <input type="password" name="pwd" id="pwd" class="form-control" placeholder="Password" required="">
+        <div class="checkbox mb-3">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block btwide" type="submit">Log In</button>
+        <br>
+        <br>
+      </form>
+      <!-- <button class="btn btn-lg btn-primary btn-block btwide form-signin stacklig" type="submit" href="{{url_for('signup')}}">Sign Up</button> -->
+</section>
+
+{% endblock%}
+

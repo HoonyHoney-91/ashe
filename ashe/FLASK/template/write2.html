@@ -1,0 +1,80 @@
+{% extends "base.html"%}
+
+{% block navlogin %}
+{% if user == 'Login' %}
+<li><a class="dropdown-item" href="{{ url_for('login') }}">LOGIN</a></li>
+<li><a class="dropdown-item" href="{{url_for('signup')}}">SIGN UP</a></li>
+{% else %}
+<li><p class="dropdown-item">{{user}}</p></li>
+{% if check_user_admin %}
+<li><a class="dropdown-item" href="{{ url_for('post2_list_admin') }}">SUBMISSION LIST</a></li>
+<li><a class="dropdown-item" href="{{ url_for('front_page_update') }}">FRONT PAGE UPDATE</a></li>
+{% else %}
+<li><a class="dropdown-item" href="{{ url_for('user_post', uid=user) }}">MY SUBMISSION</a></li>
+{% endif %}
+<li><a class="dropdown-item" href="{{ url_for('logout') }}">LOGOUT</a></li>
+{% endif %}
+{% endblock %}
+
+{% block middle %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+      </ul>
+  {% endif %}
+{% endwith %}
+<div class="board_wrap">
+    <div class="board_title">
+        <h1>UPLOAD</h1>
+        <p>This is the list of Finalized Paper</p>
+    </div>
+    <div class="row board_write_wrap">
+        <div class="board_write">
+            <form action="{{url_for('write_done')}}" method="POST" enctype="multipart/form-data">
+            <div class="row title">
+                <dl>
+                    <dt><label for="title">Title</label></dt>
+                    <dd><input type="text" name="title" id="title" placeholder="Title" required></dd>
+                </dl>
+                <dl>
+                    <dt><label for="volume">Vol.</label></dt>
+                    <dd><input type="text" name="volume" id="volume" placeholder="Vol." required></dd>
+                </dl>
+                <dl>
+                    <dt><label for="number">No.</label></dt>
+                    <dd><input type="text" name="number" id="number" placeholder="No." required></dd>
+                </dl>
+                <dl>
+                    <dt><label for="author">Author</label></dt>
+                    <dd><input type="text" name="author" id="author" placeholder="Author" required></dd>
+                </dl>
+            </div>
+            <div class="row upload">
+                <dl>
+                    <dt><label for="file">Select File</label></dt>
+                    <dd>
+                        <p id="file_warning">
+                            1. File size cannot exceed 20MB<br>
+                            2. File name should be in English<br>
+                            3. Only upload .pdf .doc .docx .hwp .hwpx formated files<br>
+                        </p>
+                        <input type="file" name="file" placeholder="file" required>
+                    </dd>
+                </dl>
+            </div>
+            <div class="row cont">
+                <label for="text"></label>
+                <textarea placeholder="Content" name="content" id="content" cols="30" rows="10" required></textarea>
+            </div>
+            <div class="bt_wrap">
+                <button type="submit">Upload</button>
+                <a href="{{ url_for('post2_list') }}" class="">Cancel</a>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock%}

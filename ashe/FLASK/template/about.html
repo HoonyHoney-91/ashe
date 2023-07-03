@@ -1,0 +1,63 @@
+{% extends "base.html"%}
+
+{% block navlogin %}
+{% if user == 'Login' %}
+<li><a class="dropdown-item" href="{{ url_for('login') }}">LOGIN</a></li>
+<li><a class="dropdown-item" href="{{url_for('signup')}}">SIGN UP</a></li>
+{% else %}
+<li><p class="dropdown-item">{{user}}</p></li>
+{% if check_user_admin %}
+<li><a class="dropdown-item" href="{{ url_for('post2_list_admin') }}">SUBMISSION LIST</a></li>
+<li><a class="dropdown-item" href="{{ url_for('front_page_update') }}">FRONT PAGE UPDATE</a></li>
+{% else %}
+<li><a class="dropdown-item" href="{{ url_for('user_post', uid=user) }}">MY SUBMISSION</a></li>
+{% endif %}
+<li><a class="dropdown-item" href="{{ url_for('logout') }}">LOGOUT</a></li>
+{% endif %}
+{% endblock %}
+
+{% block picture %}
+<div class="img_div_welcome">
+    <img src="{{ url_for('static', filename='martins-zemlickis-NPFu4GfFZ7E-unsplash.jpg') }}" alt="" class="img_welcome">
+</div>
+{% endblock%}
+
+{% block middle %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+      </ul>
+  {% endif %}
+{% endwith %}
+<p>
+    <br>
+    <br>
+    Purpose: The purpose of this society is to promote cooperation and joint research between countries to promote the health of Asians<br>
+    Organization: Researchers from Korea, China, Japan, Hong Kong, and Taiwan participate<br>
+    Members: student members, general members, general organizations, board of directors<br>
+    Conferences: academic conferences once a year, journal is published 4 times a year<br>
+    Publication language: English<br>
+</p>
+<hr>
+<p>
+    목적 : 본 학회는 운동을 통한 아시아인 특히 어린이들의 건강증진을 위한 국가간 협력과 공동연구를 촉진하기 위함을 목적으로 한다<br>
+    조직 : 한국, 중국, 일본을 중심으로 홍콩, 대만 등의 연구자들이 참여한다<br>
+    회원 : 학생회원, 일반회원, 일반기관, 이사기관<br>
+    활동 : 연간 1회의 학술대회 연간 4회의 학술지 발간 수시 세미나 학술지 발간 연간 4회(3,6,9,12월 발간) 발간<br>
+    언어 : 영어<br>
+    목표 : SCI급 학술지를 지향<br>
+</p>
+<hr>
+<p>
+    目的：本学会是通过互相协力为研究亚洲人运动特别是儿童的健康增进来达到共同促进的目的.<br>
+    组织 : 以韩国，中国大陆，日本为主，香港台湾等地区共同参加研究.<br>
+    会员 : 学生会员，一般会员，一般机关，理事机关。<br>
+    活动 :  一年一次学术大会， 一年四次学术刊物发行，随时可进行学术交流.<br>
+    学术期刊发行： 一年四次(3, 6, 9, 12发刊)<br>
+    语言 ：英文<br>
+    目的 : 成为SCI等级期刊<br>
+</p>
+{% endblock%}

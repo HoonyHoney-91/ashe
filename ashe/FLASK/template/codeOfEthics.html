@@ -1,0 +1,355 @@
+{% extends "base.html"%}
+
+{% block navlogin %}
+{% if user == 'Login' %}
+<li><a class="dropdown-item" href="{{ url_for('login') }}">LOGIN</a></li>
+<li><a class="dropdown-item" href="{{url_for('signup')}}">SIGN UP</a></li>
+{% else %}
+<li><p class="dropdown-item">{{user}}</p></li>
+{% if check_user_admin %}
+<li><a class="dropdown-item" href="{{ url_for('post2_list_admin') }}">SUBMISSION LIST</a></li>
+<li><a class="dropdown-item" href="{{ url_for('front_page_update') }}">FRONT PAGE UPDATE</a></li>
+{% else %}
+<li><a class="dropdown-item" href="{{ url_for('user_post', uid=user) }}">MY SUBMISSION</a></li>
+{% endif %}
+<li><a class="dropdown-item" href="{{ url_for('logout') }}">LOGOUT</a></li>
+{% endif %}
+{% endblock %}
+
+{% block picture %}
+<div class="img_div_welcome">
+    <img src="{{ url_for('static', filename='martins-zemlickis-NPFu4GfFZ7E-unsplash.jpg') }}" alt="" class="img_welcome">
+</div>
+{% endblock%}
+
+{% block middle %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+      </ul>
+  {% endif %}
+{% endwith %}
+<p>
+    <h2>
+        <b><center>The Asian Society for Health and Exercise Research Ethics Regulations</center></b><br>
+    </h2>
+    <br>
+    <br>
+    <br>
+    <h5>
+        <b>Article 1 (Purpose)</b> 
+    </h5>
+    The 'Asian Society for Health and Exercise Research Ethics Regulations' defines the ethics and truthfulness of all research activities related to this society, The purpose is to prescribe the procedure of this society.<br>
+    <br>
+    <h5>
+        <b>Article 2 (Applicability)</b> 
+    </h5>
+    As a member of this society, in all research activities related to the society, including presentations at academic conferences hosted or co-hosted by this society and paper submission and publication in the journal of Asian Society for Exercise Health published by this society<br>
+    <br>
+    <h5>
+        <b>Article 3 (Research Integrity)</b> 
+    </h5>
+    Researchers must observe the contents of each of the following sub paragraphs.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. Researchers must be honest in generating research ideas, conducting research, and deriving research results.<br>  
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. Researchers must ensure that research misconduct does not occur.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. Researchers must respect and not infringe on the intellectual property rights of others.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. Researchers conduct conscientious research and contribute to the development of society.<br>
+    <br>
+    <h5>
+        <b>Article 4 (Definition of Research cheating)</b> 
+    </h5>
+    Research cheating refers to violations of the ethics and integrity of research during the research process, such as forgery, variation, plagiarism, unreasonable thesis author indication, and other cheating. and its definition is as follows:<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. “Forgery” refers to the act of creating false data or research results that do not exist.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. “Falsification” refers to the act of distorting research contents or results by artificially manipulating the research process and results or arbitrarily modifying or deleting data.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. “Plagiarism” refers to the act of using the contents and results of already published research and ideas of others without proper approval or quotation.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. “Duplicate publication” refers to the case of duplication of papers with the same contents in two or more journals.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. “Improper indication of authorship” refers to not granting thesis authorship to those who have made academic contributions or contributions to research contents or results without justifiable reasons, or expressing gratitude or courtesy to those who have not made academic contributions.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6. “Other fraudulent acts” refers to acts that intentionally interfere with the investigation of suspicion of cheating by oneself or others or harm informants, or conducts research funds unfairly and infringes on the legitimate rights of research assistants.<br>
+    <br>
+    <h5>
+        <b>Article 5 (Establishment of Research Ethics Committee)</b> 
+    </h5>
+    The Research Ethics Committee is established within the society to deliberate on research ethics matters.<br>
+    <br>
+    <h5>
+        <b>Article 6 (Composition of the Research Ethics Committee)</b><br>
+    </h5>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. The committee consists of up to six members, including the vice president, general affairs director, and editor.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. The chairperson is appointed by the president of the Asian Society for Health and Exercise.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. Members are appointed by the Research Ethics Committee Chair, and the term of office of the members is 2 years, but they can be reappointed.<br>
+    <br>
+    <h5>
+        <b>Article 7 (Functions of the Research Ethics Committee)</b><br>
+    </h5>
+    The committee deliberates and resolves the following matters.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. Accusations raised regarding the ethics and integrity of research related to the society.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. Investigation of cheating in research related to the society.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. Matters to prevent cheating in research related to the society.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. Other matters to be discussed by the president and chairperson.<br>
+    <br>
+    <h5>
+        <b>Article 8 (Operation of the Research Ethics Committee)</b><br>
+    </h5>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. The committee is established with the attendance of a majority of the members present, and resolutions are made with the consent of a majority of the members present. However, the power of attorney is recognized as attendance at the establishment of the committee, but voting rights are not granted.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. Members involved in research subject to deliberation by the committee cannot participate in deliberation related to the research.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. If necessary for deliberation, the chairperson may request the submission or report of data to the person in charge of research or management, and may request opinions on research cheating from external experts.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. Members must observe confidentiality for all matters related to deliberation, and meetings are kept private.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. The Committee shall deliberate and make a decision within 50 days from the date of receipt of the matter reported as a violation of the Code of Ethics.<br>
+    <br>
+    <h5>
+        <b>Article 9 (How to Raise Problems Related to Research Ethics and Preservation of Evidence)</b><br>
+    </h5>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. Problems related to research ethics may be reported to the president, editor-in-chief or editorial board of the journal orally, in writing, by e-mail or other possible means, in real name.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. The editorial board is obliged to review research cheating in relation to conference presentations and papers submitted to journals, and if research cheating is recognized, it must be reported to the committee in consultation with the editor-in-chief.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. The results of the investigation into research cheating must be reported to the society, and the record is kept at the society for 3 years from the point of completion of the process.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. The society has an obligation to protect informants from disadvantages in status such as disciplinary action, discrimination in working conditions, and undue pressure or harm for reporting cheating, and must prepare necessary policies.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. Matters concerning the identity of the informant are not subject to information disclosure, and if the informant suffers any disadvantages under Paragraph 4 for reporting, or if his or her identity is exposed against his or her will, the information received and the related institutions shall not be held accountable for this.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6. If the informant wants to know about the investigation procedure and schedule, etc. following the report of cheating, he or she may request to inform the reporting institution or the Research Ethics Committee in charge of the investigation, and the institution must faithfully comply with the request.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7. In spite of knowing or knowing that the contents of the report were false, the informant who reported it is not included in the target of protection.<br>
+    <br>
+    <h5>
+        <b>Article 10 (Process for Verification of Research Integrity)</b><br>
+    </h5>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. In principle, the verification process for cheating is conducted in the stages of preliminary investigation, main investigation, and judgment, but preliminary investigation and main investigation may be conducted together.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. In addition to the verification procedure in Paragraph 1, the Committee may conduct an investigation by adding a procedure it deems necessary.<br>
+    <br>
+    <h5>
+        <b>Article 11 (Initiation of Research Integrity Verification Procedure)</b><br>
+    </h5>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. The research authenticity verification procedure is carried out when there is a report of research cheating in relation to the research results published in the journal of this society, or when research cheating is recognized by the editorial board.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. The research integrity verification process must be initiated within 30 days from the date of report or recognition, except in special circumstances.<br>
+    <br>
+    <h5>
+        <b>Article 12 (Subjects of Verification of Research Integrity)
+        </h5>
+    </b> In principle, research materials subject to verification of authenticity are research materials within 5 years from the date of receiving the report. and previous research cheating is not subject to verification regardless of whether it is reported. However, even if the cheating occurred before 5 years of age, this is not the case if the examinee directly recited the results and used them in follow-up research within 5 years.<br>
+    <br>
+    <h5>
+        <b>Article 13 (Preliminary Investigation)</b><br>
+    </h5>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. Preliminary investigation refers to the procedure for determining whether or not there is a need to investigate suspicions of cheating.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. As a result of the preliminary investigation, if the person under investigation admits all of the cheating, a decision can be made immediately without going through the main investigation procedure.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. If the preliminary investigation decides not to conduct the main investigation, the specific reasons for this shall be notified in writing to the informant within 10 days from the date of the decision.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. If the informant is dissatisfied with the results of the preliminary investigation, he or she may file an objection to the committee within 10 days from the date of notification.<br>
+    <br>
+    <h5>
+        <b>Article 14 (Main Investigation)</b><br>
+    </h5>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. The main investigation refers to the procedure for proving the fact of cheating. It is initiated within 10 days from the date of the decision to conduct the main investigation or the date of raising an objection in the preliminary investigation, and within 90 days from the date of commencement, In principle, completed.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. Before finalizing the results of the main investigation, the committee must give the examinee an opportunity to comment and express their opinions. However, if the party does not respond, it is deemed that there is no objection.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. Objections or counter arguments of the examinee and the results of their handling shall be included in the investigation result report. <br>
+    <br>
+    <h5>
+        <b>Article 15 (Proof of Research Integrity)</b><br>
+    </h5>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. The responsibility for proving the facts of cheating rests with the society and committee. However, if the examinee intentionally damaged or refused to submit the data requested by the Commission, the examinee shall be responsible for proving the truthfulness of the contents recognized as included in the requested data.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. The committee shall guarantee equal opportunities for the informant and the person under investigation to express opinions, raise objections, and counter arguments, and inform them of related procedures.<br>
+    <br>
+   <h5>
+       <b>Article 16 (Judgment on Research Integrity)</b><br>
+   </h5>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. Determination refers to the process of confirming the results of the main investigation and notifying the informant and the person under investigation in writing.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. In principle, all investigation schedules from the start of the preliminary investigation to the decision are to be completed within 6 months, but if it is judged that it is difficult to conduct the investigation within this period, the committee may extend the investigation period.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. The informant or examinee may file an objection to the Committee in writing stating the facts within 30 days from the date of receiving the notification of the results of the main investigation if there was a critical flaw or a new cheating was discovered during the investigation process.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. If the committee determines that the contents of the objection are reasonable and valid, it shall conduct a direct reinvestigation of the objection.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. The decision of the committee on reexamination has final effect, and further reexamination requests cannot be made under this regulation.<br>
+    <br>
+    <h5>
+        <b>Article 17 (Handling of Investigation Results on Research Integrity)</b><br>
+    </h5>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. The committee shall report the results and contents of the preliminary investigation and the main investigation to the president of the society within 10 days after the conclusion of the preliminary investigation and the main investigation, respectively.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. The results of the preliminary investigation and the main investigation shall include the following items.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1) Details of report<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2) Cheating subject to investigation<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3) List of investigators of the committee<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4) Whether or not the main investigation was conducted and basis for judgment<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5) The role of the person investigated in the study and whether the cheating was true<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6) Relevant evidence and witness<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7) Contents of objection or defense by the informant and the person under investigation and the procedure for handling it<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. After consultation with the president, the committee must notify the research ethics violator in writing of the result report and the measures taken by the society.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. Papers judged to have violated research ethics are withdrawn from publication in the journal, and at the same time, the invalidity of publication is announced in the journal, and if necessary, the head of the institution to which the violator belongs is notified.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. Those who violate research ethics are prohibited from submitting papers to the journal of this society for 3 years after the decision is made.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6. Authors of paper judged to have engaged in research cheating may be warned, suspended or deprived of academic membership, and notified to related organizations.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7. A person suspected of research cheating has the right to raise objections to the committee's findings, and the committee must guarantee an opportunity for reexamination.<br>
+    <br>
+    <h5>
+        <b>Article 18 (Reexamination)</b><br>
+    </h5>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. If the author of a paper judged to be a research cheating does not accept the decision of the committee, he or she may request a reexamination in writing to the committee within 30 days from the date of notification of the decision.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. The committee shall conduct a reexamination according to the provisions of Article 5 within 7 days after receiving the request for reexamination, and notify the researcher of the result within 30 days.<br>
+    <br>
+    <h5>
+        <b>Article 19 (Confirmation of Compliance with Research Ethics Regulations and Consent to Transfer of Copyright)</b><br>
+    </h5>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. Researchers participating in all research activities related to the society are obliged to comply with the research ethics regulations, It is mandatory to submit a written statement of compliance with research ethics regulations.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. When a researcher applies for publication in an academic journal, he or she must submit the 'Research Ethics Compliance Statement and Copyright Transfer Agreement' to the editorial board.<br>
+    <br>
+    <br>
+    Addendum Article 1 (Effective Date)<br>
+    This regulation is effective from January 1, 2019.<br>
+</p>
+<hr>
+<p>
+    <h2>
+        <b><center>아시아아시아건강운동학회 연구윤리 규정</center></b><br>
+    </h2>
+    <br>
+    <br>
+    <br>
+    <h5>
+        <b>제1조(목적)</b> 
+    </h5>
+    ‘아시아건강운동학회(이하 본 학회) 연구윤리 규정’은 본 학회와 관련된 제반 연구 행위의 윤리성과 진실성을 정의하고, 이를 위반하는 행위에 대한 본 학회의 처리 절차를 규정하는 것을 목적으로 한다.<br>
+    <br>
+    <h5>
+        <b>제2조(적용대상)</b> 
+    </h5>
+    본 학회의 회원으로서 본 학회가 주관 또는 공동 주관하는 학술대회 발표와 본 학회가 발행하는 학술지 ‘아시아운동건강학회지’의 논문 투고 및 게재를 포함한 학회와 관련된 제반 연구 행위에 참여하는 연구자에게 적용한다.<br>
+    <br>
+    <h5>
+        <b>제3조(연구의 진실성)</b> 
+    </h5>
+    연구자는 다음 각 호의 내용을 준수하여야 한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 연구자는 연구 아이디어의 창출, 연구의 진행, 연구결과의 도출 등에서 정직하여야 한다.<br>  
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 연구자는 연구의 부정행위가 발생하지 않도록 하여야 한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 연구자는 타인의 지적 재산권을 존중하고 이를 침해하지 않아야 한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. 연구자는 양심적인 연구를 수행하고 사회의 발전에 기여한다.<br>
+    <br>
+    <h5>
+        <b>제4조(연구부정행위의 정의)</b> 
+    </h5>
+    연구부정행위라 함은 연구 과정에서 연구의 윤리성과 진실성을 위반한 것으로 연구 과정에서 행해진 위조, 변주, 표절, 부당한 논문저자 표시 행위, 기타 부정행위 등을 말하며 그 정의는 다음과 같다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. “위조”는 존재하지 않는 데이터 또는 연구결과 등을 허위로 만들어 내는 행위를 말한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. “변조”는 연구과정과 결과 등을 인위적으로 조작하거나 데이터를 임의로 변형 삭제함으로써 연구 내용 또는 결과를 왜곡하는 행위를 말한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. “표절”이라 함은 이미 발표된 연구의 내용과 결과 그리고 타인의 아이디어를 정당한 승인 또는 인용 없이 사용하는 행위를 말한다. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. ‘이중 게재’는 동일한 내용의 논문을 두 개 이상의 학술지에 중복하여 발표하는 경우를 말한다. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. “부당한 논문저자 표시”는 연구내용 또는 결과에 대하여 학술적 공헌 또는 기여를 한 사람에게 정당한 이유 없이 논문저자 자격을 부여하지 않거나, 학술적 공헌 또는 기여를 하지않은 자에게 감사의 표시 또는 예우 등을 이유로 논문저자 자격을 부여하는 행위를 말한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6. “기타 부정행위”란 본인 또는 타인의 부정행위의 의혹에 대한 조사를 고의로 방해하거나 제보자에게 위해를 가하는 행위 또는 연구비를 부당하게 집행하고 연구보조원의 정당한 권리를 침해하는 등 민주적이고 투명한 연구 활동을 위반한 행위를 말한다.<br>
+    <br>
+    <h5>
+        <b>제5조(연구윤리위원회의 설치)</b> 
+    </h5>
+    연구윤리에 관한 사항을 심의하기 위하여 학회 내에 연구윤리위원회(이하 위원회)를 둔다.<br>
+    <br>
+    <h5>
+        <b>제6조(연구윤리위원회의 구성</b><br>
+    </h5>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 위원회는 부회장, 총무이사, 편집위원을 포함하여 6인 이내의 위원으로 구성한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 위원장은 아시아건강운동학회장이 임명한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 위원은 연구윤리위원장이 임명하며, 위원의 임기는 2년으로 하되 연임할 수 있다.<br>
+    <br>
+    <h5>
+        <b>제7조(연구윤리위원회의 기능)</b><br>
+    </h5>
+    위원회는 다음의 사항을 심의하고 의결한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 학회와 관련된 연구의 윤리성과 진실성에 관해 제기된 고발 사항<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 학회와 관련된 연구 부정행위에 대한 조사<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 학회 관련 연구의 부정행위의 예방을 위한 사항<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. 기타 회장 및 위원장이 부의하는 사항<br>
+    <br>
+    <h5>
+        <b>제8조(연구윤리위원회의 운영)</b><br>
+    </h5>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 위원회는 회장의 요청이 있을 경우 또는 위원장이 필요하다고 인정할 경우 위원장이 소집한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 위원회는 재적위원 과반수의 출석으로 성립하고, 출석위원 과반수의 찬성으로 의결한다. 단, 위임장은 위원회의 성립에서 출석으로 인정하되 의결권은 부여하지 않는다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 위회의 심의 대상인 연구에 관여하고 있는 위원은 그 연구와 관련된 심의에 참여할 수 없다. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. 위원장은 심의를 위하여 필요한 경우 연구책임자 혹은 관리책임자에게 자료의 제출 또는 보고를 요구할 수 있으며, 외부 전문가로부터 연구물의 연구 부정행위에 관한 의견을 요청할 수 있다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. 위원은 심의와 관련된 제반 사항에 대하여 비밀을 준수해야 하고, 회의는 비공개로 한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6. 위원회는 윤리규정 위반으로 보고된 사안에 대해 접수된 날로부터 50일 이내에 심의 의결하여야 한다.<br>
+    <br>
+    <h5>
+        <b>제9조(연구윤리와 관련된 문제 제기 방법 및 증거보전)</b><br>
+    </h5>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 연구윤리와 관련된 문제는 회장, 학술지의 편집위원장 또는 편집위원에게 구술, 서면, 전자우편 및 기타 가능한 방법으로 실명으로 제보할 수 있다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 편집위원은 학회 발표와 학술지 투고 논문과 관련하여 연구부정행위를 검토할 의무가 있으며, 연구부정행위를 인지한 경우 편집위원장과 협의하여 위원회에 보고하여야 한다. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 연구부정행위에 대한 조사의 결과는 학회에 보고해야 하며, 그 기록은 처리가 종료된 시점을 기준으로 3년간 학회에 보관한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. 학회는 제보자가 부정행위 제보를 이유로 징계 등 신분상 불이익, 근무조건상의 차별, 부당한 압력 또는 위해 등을 받지 않도록 보호해야 할 의무를 지니며 이에 필요한 시책을 마련하여야 한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. 제보자의 신원에 관한 사항은 정보공개의 대상이 되지 않으며, 제보자가 제보를 이유로 제4항의 불이익을 받거나 자신의 의지에 반하여 신원이 노출될 경우 제보의 접수와 이에 관계된 기관이 이에 대한 책임을 진다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6. 제보자는 부정행위의 제보 이후에 진행되는 조사 절차 및 일정 등에 대하여 알고자 할 경우 제보 접수기관 또는 조사를 담당하는 연구윤리위원회에 알려줄 것을 요구할 수 있으며 해당 기관은 이에 성실히 응하여야 한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7. 제보 내용이 허위인 줄 알았거나 알 수 있었음에도 불구하고, 이를 제보한 제보자는 보호 대상에 포함되지 않는다.<br>
+    <br>
+    <h5>
+        <b>제10조(연구 진실성 검증 절차)</b><br>
+    </h5>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 부정행위에 대한 검증 절차는 예비조사, 본조사, 판정의 단계로 진행함을 원칙으로 하되, 예비조사와 본조사를 함께 진행할 수도 있다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 위원회는 제1항의 검증절차 외에 필요하다고 판단하는 절차를 추가하여 조사를 진행할 수 있다.<br>
+    <br>
+    <h5>
+        <b>제11조(연구 진실성 검증 절차의 개시)</b><br>
+    </h5>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 연구 진실성 검증 절차는 본 학회 학술지에 게재된 연구 결과물과 관련하여 연구 부정행위의 제보가 있을 때, 또는 연구 부정행위를 편집위원회에서 인지하였을 때에 개시된다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 연구 진실성 검증 절차는 제보나 인지가 된 날을 기준으로 특별한 사정이 있는 경우를 제외하고 30일 이내에 개시하여야 한다. <br>
+    <br>
+    <h5>
+        <b>제12조(연구 진실성 검증 대상)<br>
+        </h5>
+    </b> 진실성 검증의 대상이 되는 연구물은 제보 접수일로부터 만5년 이내의 연구물을 원칙으로 하며, 그 이전의 연구 부정행위는 제보 여하에 관계없이 검증 대상으로 하지 않는다. 다만, 만5년 이전의 부정행위라 하더라도 피조사자가 그 결과를 직접 재인용하여 만5년 이내의 후속 연구에 사용하였을 경우에는 그러하지 아니한다.<br>
+    <br>
+    <h5>
+        <b>제13조(예비조사)</b><br>
+    </h5>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 예비조사란 부정행위의 의혹에 대하여 조사할 필요가 있는지 여부를 결정하기 위한 절차를 말하며, 제보 접수일로부터 30일 이내에 착수하며, 착수일로부터 60일 이내에 완료하여야 한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 예비조사 결과 피조사자가 부정행위 사실을 모두 인정한 경우에는 본 조사 절차를 거치지 않고 바로 판정을 내릴 수 있다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 예비조사에서 본 조사를 실시하지 않는 것으로 결정할 경우 이에 대한 구체적인 사유를 결정일로부터 10일 이내에 제보자에게 문서로 통보한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. 제보자는 예비조사 결과에 대해 불복하는 경우 통보를 받은 날로부터 10일 이내에 위원회에 이의를 제기할 수 있다.<br>
+    <br>
+    <h5>
+        <b>제14조(본조사)</b><br>
+    </h5>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 본조사란 부정행위의 사실여부를 입증하기 위한 절차를 말하며, 예비조사에서 본조사를 진행하기로 결정한 날 혹은 이의제기일로부터 10일 이내에 착수하고, 착수일로부터 90일 이내에 완료하는 것을 원칙으로 한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 위원회는 본조사 결과를 확정하기 이전에 피조사자에게 반드시 반론 및 의견진술의 기회를 주어야 한다. 다만, 당사자가 이에 응하지 않을 경우에는 이의가 없는 것으로 간주한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 피조사자의 이의제기 또는 반론 내용과 그에 대한 처리 결과는 조사결과 보고서에 포함한다.<br>
+    <br>
+    <h5>
+        <b>제15조(연구 진실성에 대한 입증)</b><br>
+    </h5>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 부정행위의 사실 여부를 입증할 책임은 학회와 위원회에 있다. 다만, 피조사자가 위원회에서 요구하는 자료를 고의로 훼손하였거나 제출을 거부하는 경우에는 그 요구자료에 포함되어 있다고 인정되는 내용의 진실성을 입증할 책임은 피조사자에게 있다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 위원회는 제보자와 피조사자에게 의견진술, 이의 및 반론 제기의 기회를 동등하게 보장하여야 하며, 이와 관련된 절차를 알려주어야 한다.<br>
+    <br>
+   <h5>
+       <b>제16조(연구 진실성에 대한 판정)</b><br>
+   </h5>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 판정이란 본조사 결과를 확정하고 이를 제보자와 피조사자에게 문서로써 통보하는 절차를 말한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 예비조사 착수 이후 판정에 이르기까지의 모든 조사 일정은 6개월 이내에 종료하는 것을 원칙으로 하되, 이 기간 내에 조사가 이루어지기 어렵다고 판단될 경우, 위원회는 조사 기간을 연장할 수 있다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 제보자 또는 피조사자는 조사과정에서 결정적인 흠결이 있었거나, 새로운 부정행위의 사실이 발견된 경우, 본조사의 결과통보를 받은 날로부터 30일 이내에 사실을 적시한 서면으로 위원회에 이의를 신청할 수 있다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. 위원회는 이의신청 내용이 합리적이고 타당하다고 판단할 경우, 그 이의사실에 대한 직접적인 재조사를 실시하여야 한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. 재심사에 대한 위원회의 결정은 최종적인 효력을 가지며, 이 규정에 의한 더 이상의 재심사요청은 할 수 없다.<br>
+    <br>
+    <h5>
+        <b>제17조(연구 진실성에 대한 조사 결과의 처리)</b><br>
+    </h5>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 위원회는 예비조사 및 본조사의 결과와 내용을 예비조사 및 본조사 종료 및 판정 후 각각 10일 이내에 학회장에게 보고하여야 한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 예비조사와 본조사의 결과보고서에는 다음 각 호의 사항이 포함되어야 한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1) 제보의 내용<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2) 조사의 대상이 된 부정행위<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3) 위원회의 조사위원 명단<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4) 본 조사 실시 여부 및 판단의 근거<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5) 해당 연구에서의 피조사자의 역할과 부정행위의 사실 여부<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6) 관련 증거 및 증인<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7) 제보자와 피조사자의 이의제기 또는 변론 내용과 그에 대한 처리절차t<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. 위원회는 회장과의 협의를 거친 후 결과보고서와 학회의 조치사항을 연구윤리 위반자에게 문서로써 통보하여야 한다. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. 연구윤리를 위반한 것으로 판정된 논문은 학회 학술지에 그 게재를 철회함과 동시에 게재 무효를 학술지에 공고하며, 필요한 경우 위반행위를 한 자의 소속기관장에게 통보한다. .<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. 연구윤리를 위반한 자는 그 판정이 난 후 3년 동안 본 학회 학술지에 논문 투고를 금지한다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6. 연구부정행위를 한 것으로 판단된 논문의 저자에게는 경고, 학회 회원 자격의 정지 또는 박탈, 그리고 관계기관 통보 등의 조치를 취할 수 있다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7. 연구부정행위로 의심받는 자는 위원회의 조사결과에 대하여 반론을 제기할 수 있는 권리를 가지며, 위원회는 재심의 기회를 보장하여야 한다. <br>
+    <br>
+    <h5>
+        <b>제18조(재심의)</b><br>
+    </h5>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 연구부정행위로 판단된 논문의 저자가 위원회의 결정에 불복하는 경우, 결정을 통지받은 날부터 30일 이내에 위원회에 서면으로 재심의를 요청할 수 있다.<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.위원회는 재심의 요청을 받은 후 7일 이내에 제5조의 규정에 따라 재심의를 실시하여야하며, 30일 이내에 그 결과를 연구자에게 통보하여야 한다.<br>
+    <br>
+    <h5>
+        <b>제19조(연구윤리 규정 준수 확약 및 저작권 이양동의)</b><br>
+    </h5>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. 학회와 관련된 모든 연구 활동에 참여하는 연구자는 연구윤리 규정을 준수할 의무가 있으며, 학술지 논문 투고자의 연구윤리 규정준수를 확인하기 위해 연구윤리 규정 준수 확약서 제출을 의무화한다. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. 연구자는 학술지에 논문게재를 신청할 때 '연구윤리 규정 준수 확약서 및 저작권 이양동의서'를 편집위원회에 제출하여야 한다.<br>
+    <br>
+    <br>
+    부 칙 제1조(시행일)<br>
+    본 규정은 2019년 1월 1일부터 시행한다<br>
+</p>
+{% endblock%}

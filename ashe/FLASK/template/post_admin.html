@@ -1,0 +1,168 @@
+{% extends "base.html"%}
+
+{% block navlogin %}
+{% if user == 'Login' %}
+<li><a class="dropdown-item" href="{{ url_for('login') }}">LOGIN</a></li>
+<li><a class="dropdown-item" href="{{url_for('signup')}}">SIGN UP</a></li>
+{% else %}
+<li><p class="dropdown-item">{{user}}</p></li>
+{% if check_user_admin %}
+<li><a class="dropdown-item" href="{{ url_for('post2_list_admin') }}">SUBMISSION LIST</a></li>
+<li><a class="dropdown-item" href="{{ url_for('front_page_update') }}">FRONT PAGE UPDATE</a></li>
+{% else %}
+<li><a class="dropdown-item" href="{{ url_for('user_post', uid=user) }}">MY SUBMISSION</a></li>
+{% endif %}
+<li><a class="dropdown-item" href="{{ url_for('logout') }}">LOGOUT</a></li>
+{% endif %}
+{% endblock %}
+
+{% block middle %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+      </ul>
+  {% endif %}
+{% endwith %}
+<div class="board_wrap">
+    <div class="board_title">
+        <h1>SUBMISSION</h1>
+        <p>This is the list of Finalized Paper</p>
+    </div>
+    <div class="row board_view_wrap">
+        <div class="board_view">
+            <div class="row title">
+                {{ post.title }}
+            </div>
+            <div class="row info">
+                <div class="col">
+                    <dl>
+                        <dt>Author</dt>
+                        <dd>{{ post.author }}</dd>
+                    </dl>
+                    <dl>
+                        <dt>File</dt>
+                        <dd>
+                          {% if post.file_url %}
+                          <a href="{{ url_for('download_admin', post_id=post_id) }}" download>Download</a>
+                          {% else %}
+                              No file attached.
+                          {% endif %}
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>Date</dt>
+                        <dd>{{ post.date_posted }}</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="row cont" id="pdf-viewer">
+              <embed src="{{ post.file_url }}" type="application/pdf" width="100%" height="1000px">
+            </div>
+            <!-- <div>
+                <span>Page <span id="page-num"></span> of <span id="page-count"></span></span>
+                <button id="prev">&lt;</button>
+                <button id="next">&gt;</button>
+            </div> -->
+        </div>
+        <br>
+        <br>
+        <div class="bt_wrap">
+            <!-- <a href="{{ url_for('post2_list') }}" class="list_bt">List</a> -->
+
+        </div>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='pdf.js') }}"></script>
+
+<script>
+  // Get the URL of the PDF file to load
+  var url = "{{ url_for('download_admin', random2_dir=post.random2_dir) }}";
+
+  // Initialize variables
+  var pdfDoc = null;
+  var pageNum = 1;
+  var pageRendering = false;
+  var pageNumPending = null;
+  var canvas = document.getElementById('pdf-canvas');
+  var ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+  // Function to render a page of the PDF
+  function renderPage(num) {
+    // Set page rendering flag
+    pageRendering = true;
+
+    // Get the page to render
+    pdfDoc.getPage(num).then(function(page) {
+      // Get the viewport of the page at scale=1
+      var viewport = page.getViewport({scale: 1});
+
+      // Set the canvas dimensions to match the viewport
+      canvas.height = viewport.height;
+      canvas.width = viewport.width;
+
+      // Render the page to the canvas
+      var renderContext = {
+        canvasContext: ctx,
+        viewport: viewport
+      };
+      var renderTask = page.render(renderContext);
+
+      // Wait for rendering to complete
+      renderTask.promise.then(function() {
+        // Clear the page rendering flag
+        pageRendering = false;
+
+        // If there are pending page numbers, render the next page
+        if (pageNumPending !== null) {
+          renderPage(pageNumPending);
+          pageNumPending = null;
+        }
+      });
+    });
+
+    // Update current page number in the UI
+    document.getElementById('page-num').textContent = num;
+  }
+
+  // Function to queue the rendering of the next page
+  function queueRenderPage(num) {
+    if (pageRendering) {
+      pageNumPending = num;
+    } else {
+      renderPage(num);
+    }
+  }
+
+  // Load the PDF document
+  pdfjsLib.getDocument(url).promise.then(function(pdfDoc_) {
+    pdfDoc = pdfDoc_;
+
+    // Update the UI with the total number of pages
+    document.getElementById('page-count').textContent = pdfDoc.numPages;
+
+    // Render the first page
+    renderPage(pageNum);
+  });
+
+  // Attach event listeners for navigation buttons
+  document.getElementById('prev-page').addEventListener('click', function() {
+    if (pageNum <= 1) {
+      return;
+    }
+    pageNum--;
+    queueRenderPage(pageNum);
+  });
+  document.getElementById('next-page').addEventListener('click', function() {
+    if (pageNum >= pdfDoc.numPages) {
+      return;
+    }
+    pageNum++;
+    queueRenderPage(pageNum);
+  });
+</script>
+{% endblock %}

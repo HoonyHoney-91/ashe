@@ -1,0 +1,47 @@
+{% extends "base.html"%}
+
+{% block navlogin %}
+{% if user == 'Login' %}
+<li><a class="dropdown-item" href="{{ url_for('login') }}">LOGIN</a></li>
+<li><a class="dropdown-item" href="{{url_for('signup')}}">SIGN UP</a></li>
+{% else %}
+<li><p class="dropdown-item">{{user}}</p></li>
+{% if check_user_admin %}
+<li><a class="dropdown-item" href="{{ url_for('post2_list_admin') }}">SUBMISSION LIST</a></li>
+<li><a class="dropdown-item" href="{{ url_for('front_page_update') }}">FRONT PAGE UPDATE</a></li>
+{% else %}
+<li><a class="dropdown-item" href="{{ url_for('user_post', uid=user) }}">MY SUBMISSION</a></li>
+{% endif %}
+<li><a class="dropdown-item" href="{{ url_for('logout') }}">LOGOUT</a></li>
+{% endif %}
+{% endblock %}
+
+{% block middle %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+      </ul>
+  {% endif %}
+{% endwith %}
+<!-- <img src="{{ url_for('static', filename='international conference.jpg') }}" alt=""> -->
+{% if image_url %}
+<img src="{{ image_url }}" alt="Front Page Image">
+{% endif %}
+
+
+<p>
+    2023 ASHE <br>
+International Conference <br>
+-Data-driven approach to improve heal and performance- <br>
+7.13.(Thu.)~7.14.(Fri.) 2023 <br>
+Songwon University(Korea, Kwangju) <br>
+Asian Society for Health and Exercise <br>
+Korean Society for Measurement and Evaluation in Physical Education and Sport Science <br>
+Songwon University <br>
+
+</p>
+
+{% endblock%}

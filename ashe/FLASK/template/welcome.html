@@ -1,0 +1,75 @@
+{% extends "base.html"%}
+
+{% block navlogin %}
+{% if user == 'Login' %}
+<li><a class="dropdown-item" href="{{ url_for('login') }}">LOGIN</a></li>
+<li><a class="dropdown-item" href="{{url_for('signup')}}">SIGN UP</a></li>
+{% else %}
+<li><p class="dropdown-item">{{user}}</p></li>
+{% if check_user_admin %}
+<li><a class="dropdown-item" href="{{ url_for('post2_list_admin') }}">SUBMISSION LIST</a></li>
+<li><a class="dropdown-item" href="{{ url_for('front_page_update') }}">FRONT PAGE UPDATE</a></li>
+{% else %}
+<li><a class="dropdown-item" href="{{ url_for('user_post', uid=user) }}">MY SUBMISSION</a></li>
+{% endif %}
+<li><a class="dropdown-item" href="{{ url_for('logout') }}">LOGOUT</a></li>
+{% endif %}
+{% endblock %}
+
+{% block picture %}
+<div class="img_div_welcome">
+    <img src="{{ url_for('static', filename='martins-zemlickis-NPFu4GfFZ7E-unsplash.jpg') }}" alt="" class="img_welcome">
+</div>
+{% endblock%}
+
+{% block middle %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <ul class=flashes>
+      {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+      </ul>
+  {% endif %}
+{% endwith %}
+<p>
+    <br>
+    <br>
+    <br>
+    Dear members.<br>
+    <br>
+    <br>
+
+    Welcome to the Asian Society Health and Exercise(ASHE). <br>
+
+    This society was established for the promotion of the collaborated 
+    researches between countries to be considered with the health through exercise. 
+    The members of the Asian Society of Health and Exercise would like to study on the 
+    environment of health with Asian exercise scientists, that is getting worse in a day by day. 
+    Also, we are appreciated to share its results with everyone. 
+    The scope of our society is to make a cooperation between members and to support for the 
+    effectiveness of research activities through the publication of 
+    academic journals and academic conferences.<br>
+    <br>
+    <br>
+    Thank you very much for your attention,<br>
+    <br>
+    Seungyun, Shin. <br>
+</p>
+<hr>
+<p>
+    <br>
+    <br>
+    <br>
+    Dear members. <br>
+    <br>
+    <br>
+
+    欢迎大家访问亚洲健康运动学会.<br>
+
+    本学会是通过运动来保持健康为目的, 各个国家研究者互相促进共同研究所创立. 为改善日益恶化的健康环境, 亚洲的运动健康研究学者共同研究并共享其结果. 与发表学术期刊及学术大会等相比更希望有更深一层的实质性研究活动并为此将不断努力.<br>
+    <br>
+    <br>
+    Seungyun, Shin. <br>
+</p>
+{% endblock%}
