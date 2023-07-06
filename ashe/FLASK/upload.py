@@ -2,36 +2,26 @@ from flask import Flask, render_template, request, redirect, flash, session, url
 from werkzeug.utils import secure_filename
 from DB_handler import DBHandler
 from datetime import datetime, timedelta
-# import random
-# import string
 import secrets
 from pdf2image import convert_from_path
 import firebase_admin
 from firebase_admin import credentials, storage
 import tempfile
 
-
 cred = credentials.Certificate('FLASK/auth/serviceAccount.json')
 firebase_admin.initialize_app(cred, {
     "storageBucket": "ashedb-936cf.appspot.com"
 })
 
-
 app = Flask(__name__, template_folder='template', static_url_path='/static') 
 app.secret_key = secrets.token_hex(16)
 DB = DBHandler()
 
-# app.config['UPLOAD_FOLDER'] = 'FLASK/save'
-# app.config['UPLOAD_FOLDER_AUTH'] = '/Users/anthonyshin/Documents/ashe/FLASK/authsave'
 app.config['MAX_CONTENT_LENGTH'] = 20 * 1024 * 1024
 app.config['ALLOWED_EXTENSIONS'] = set(['pdf'])
 # for front page image
 ALLOWED_EXTENSIONS = {'pdf', 'jpeg', 'gif', 'png', 'jpg'}
 app.config['ALLOWED_EXTENSIONS_FOR_FRONT_PAGE'] = ALLOWED_EXTENSIONS
-
-
-# cred = credentials.Certificate('/Users/anthonyshin/Documents/ashe/FLASK/auth/serviceAccount.json')
-# firebase_admin.initialize_app(cred, {'storageBucket': 'ashedb-936cf.appspot.com'})
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -44,6 +34,7 @@ def allowed_file_front_page(filename):
 
 def generate_secret_key():
     return secrets.token_hex(16)
+    
 # 기본 페이지들
 @app.route('/')
 def index():
@@ -52,10 +43,8 @@ def index():
         check_user_admin = DB.check_user_admin(user)
     else:
         check_user_admin = False
-
     image_url = DB.get_front_page_image_url()
     print(f"image_url from index${image_url}")
-
     return render_template('index.html', user=user, check_user_admin=check_user_admin, image_url=image_url)
 
 @app.route('/about')
@@ -65,7 +54,6 @@ def about():
         check_user_admin = DB.check_user_admin(user)
     else:
         check_user_admin = False
-
     return render_template('about.html', user=user, check_user_admin=check_user_admin)
 
 @app.route('/articlesOfIncorporation')
@@ -84,7 +72,6 @@ def codeOfEthics():
         check_user_admin = DB.check_user_admin(user)
     else:
         check_user_admin = False
-
     return render_template('codeOfEthics.html', user=user, check_user_admin=check_user_admin)
 
 @app.route('/guideline')
@@ -94,7 +81,6 @@ def guideline():
         check_user_admin = DB.check_user_admin(user)
     else:
         check_user_admin = False
-
     return render_template('guideline.html', user=user, check_user_admin=check_user_admin)
 
 @app.route('/regulation')
@@ -104,7 +90,6 @@ def regulation():
         check_user_admin = DB.check_user_admin(user)
     else:
         check_user_admin = False
-
     return render_template('regulation.html', user=user, check_user_admin=check_user_admin)
 
 @app.route('/welcome')
@@ -114,7 +99,6 @@ def welcome():
         check_user_admin = DB.check_user_admin(user)
     else:
         check_user_admin = False
-
     return render_template('welcome.html', user=user, check_user_admin=check_user_admin)
 
 # 기본페이지 끝
@@ -177,40 +161,28 @@ def post2_list_admin(page=None):
         check_user_admin = DB.check_user_admin(user)
     else:
         check_user_admin = False
-
     if 'uid' in session:
         posts_per_page = 10
-
         post2_list = DB.post2_list_admin()
         print(post2_list)
-
         if post2_list is not None:
             check_user_admin = DB.check_user_admin
-
             total_posts = len(post2_list)
             total_pages = (total_posts - 1) // posts_per_page + 1
-
             if page is None or page > total_pages:
                 page = total_pages
-
             current_page = page
-
             start_index = (current_page - 1) * posts_per_page
             end_index = start_index + posts_per_page
-
             if end_index > total_posts:
                 end_index = total_posts
-
             current_page_posts = post2_list[start_index:end_index]
-
-            print("Current Page:", current_page)  # Add this line to check the value of current_page
-
+            print("Current Page:", current_page)
             return render_template('list_admin.html', user=user, post2_list=current_page_posts, check_user_admin=check_user_admin, total_posts=total_posts, total_pages=total_pages, current_page=current_page, posts_per_page=posts_per_page)
         else:
             return "No posts found"
     else:
         return redirect(url_for('login'))
-
 
 @app.route('/search_admin', methods=['GET'])
 def search_admin():
@@ -218,7 +190,6 @@ def search_admin():
     search_text = request.args.get('text')
     print('Search Type:', search_type)
     print('Search Text:', search_text)
-
     # Search for posts and return the search results
     if search_type == 'title':
         search_results = DB.search_posts_by_title_admin(search_text)
@@ -226,9 +197,7 @@ def search_admin():
         search_results = DB.search_posts_by_author_admin(search_text)
     else:
         search_results = []
-
     return jsonify(search_results)
-
 
 @app.route('/post_admin/<string:post_id>')
 def post_admin(post_id):
@@ -249,14 +218,12 @@ def post_admin(post_id):
                 break
         post['file_name'] = file_url
         post['file_path'] = ""
- 
         if file_url:
             try:
                 file_url = DB.storage.child('student').child(post_id).child(file_url).get_url(None)
             except Exception as e:
                 print("Error retrieving file URL:", str(e))
                 file_url = None
-
         post['file_url'] = file_url
         print("Retrieved post data:", post)
         print(post['file_name'])
@@ -264,8 +231,6 @@ def post_admin(post_id):
         return render_template('post_admin.html', post=post, user=user, post_id=post_id, check_user_admin=check_user_admin)
     else:
         return f"Post {post_id} not found"
-
-
 
 @app.route('/download_admin')
 def download_admin():
@@ -278,7 +243,6 @@ def download_admin():
             print("post_admin:", post)
             file_name = post.get('file_name')
             print("file_name_admin:", file_name)
-
             if file_name:
                 file_path = f"student/{post_id}/{file_name}"
                 # Create a temporary file path to save the downloaded file
@@ -299,8 +263,6 @@ def download_admin():
     else:
         print("post_id:", post_id)
         return "Invalid request"
-
-
 
 # -----------------------------------------------------------------------------------------
 # 논문개시 관련 / 
@@ -326,17 +288,14 @@ def write2():
                 if not allowed_file(file.filename):
                     flash("Only upload .pdf formatted files")
                     return redirect(request.url)
-
                 title = request.form['title']
                 content = request.form['content']
                 volume = request.form['volume']
                 number = request.form['number']
                 uid = session.get('uid')
                 author = request.form['author']
-                # random2_dir = ''.join(random.choices(string.digits, k=8))
                 date_posted = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                 DB.write2_post(title, content, volume, number, uid, author, date_posted, file)
-
                 print("volume:", volume)
                 print("number:", number)
                 print("author:", author)
@@ -371,35 +330,23 @@ def write_done():
 def post2_list(page=None):
     user = session.get('uid', 'Login')
     check_user_admin = False
-
     if user != 'Login':
         check_user_admin = DB.check_user_admin(user)
-
     if 'uid' in session:
         posts_per_page = 10
-
         post2_list = DB.post2_list()
-
         if post2_list is not None:
-            # check_user_admin = DB.check_user_admin
-
             total_posts = len(post2_list)
             total_pages = (total_posts - 1) // posts_per_page + 1
-
             if page is None or page > total_pages:
                 page = total_pages
-
             current_page = page
-
             start_index = (current_page - 1) * posts_per_page
             end_index = start_index + posts_per_page
-
             if end_index > total_posts:
                 end_index = total_posts
-
             current_page_posts = post2_list[start_index:end_index]
-
-            print("Current Page:", current_page)  # Add this line to check the value of current_page
+            print("Current Page:", current_page)
 
             return render_template('list.html', user=user, post2_list=current_page_posts, check_user_admin=check_user_admin, total_posts=total_posts, total_pages=total_pages, current_page=current_page, posts_per_page=posts_per_page)
         else:
@@ -407,14 +354,12 @@ def post2_list(page=None):
     else:
         return redirect(url_for('login'))
 
-
 @app.route('/search', methods=['GET'])
 def search():
     search_type = request.args.get('type')
     search_text = request.args.get('text')
     print('Search Type:', search_type)
     print('Search Text:', search_text)
-
     # Search for posts and return the search results
     if search_type == 'title':
         search_results = DB.search_posts_by_title(search_text)
@@ -424,7 +369,6 @@ def search():
         search_results = []
 
     return jsonify(search_results)
-
 
 @app.route('/post/<string:post_id>')
 def post(post_id):
@@ -436,8 +380,6 @@ def post(post_id):
         check_user_admin = DB.check_user_admin(user)
     else:
         check_user_admin = False
-
-
     if post:
         post_list = DB.post2_list()
         file_url = None
@@ -447,14 +389,12 @@ def post(post_id):
                 break
         post['file_name'] = file_url
         post['file_path'] = ""
- 
         if file_url:
             try:
                 file_url = DB.storage.child('admin').child(post_id).child(file_url).get_url(None)
             except Exception as e:
                 print("Error retrieving file URL:", str(e))
                 file_url = None
-
         post['file_url'] = file_url
         print("Retrieved post data:", post)
         print(post['file_name'])
@@ -462,8 +402,6 @@ def post(post_id):
         return render_template('post.html', post=post, user=user, post_id=post_id, check_user_admin=check_user_admin)
     else:
         return f"Post {post_id} not found"
-
-
 
 @app.route('/download')
 def download():
@@ -474,7 +412,6 @@ def download():
             # get the file URL from the post details using the post_id
             post = DB.post2_detail(post_id)
             file_name = post.get('file_name')
-
             if file_name:
                 file_path = f"admin/{post_id}/{file_name}"
                 # Create a temporary file path to save the downloaded file
@@ -527,25 +464,19 @@ def write():
             content = request.form['content']
             uid = session.get('uid')
             author = request.form.get("author")
-            # random_dir = ''.join(random.choices(string.digits, k=8))
             date_posted = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             DB.write_post(title, content, uid, author, date_posted, file)
-            # DB.write_post(title, content, uid, date_posted, request.files['file'])
-
             return redirect(url_for('havesaved'))
         return render_template('write.html', user=user, check_user_admin=check_user_admin)
     else:
         return redirect(url_for('login'))
     
-
-
 @app.route('/post_student/<string:post_id>')
 def post_student(post_id):
     print("post function called with post_id_admin:", post_id)
     user = session.get('uid', 'Login')
     post = DB.post2_detail_admin(post_id)
     print("Retrieved post data_admin:", post)
-
     if post:
         post_list = DB.post2_list_admin()
         file_url = None
@@ -555,14 +486,12 @@ def post_student(post_id):
                 break
         post['file_name'] = file_url
         post['file_path'] = ""
- 
         if file_url:
             try:
                 file_url = DB.storage.child('student').child(post_id).child(file_url).get_url(None)
             except Exception as e:
                 print("Error retrieving file URL:", str(e))
                 file_url = None
-
         post['file_url'] = file_url
         print("Retrieved post data:", post)
         print(post['file_name'])
@@ -570,8 +499,6 @@ def post_student(post_id):
         return render_template('post_admin.html', post=post, user=user, post_id=post_id)
     else:
         return f"Post {post_id} not found"
-
-
 
 @app.route('/user/<string:uid>')
 def user_post(uid):
@@ -583,7 +510,6 @@ def user_post(uid):
     else:
         length = len(u_post)
     return render_template('userDetail.html', post=u_post, length=length, uid=uid, user=user)
-
 
 # front page update related
 @app.route('/user/<string:uid>')
@@ -607,18 +533,15 @@ def front_page_update():
         try:
             # Create the "posting" folder in Firebase Storage if it doesn't exist
             DB.create_posting_folder()
-
             # Upload the file to Firebase Storage in the "posting" folder
             download_url = DB.front_page_upload(file)
             print(f"download_url in front_page_update:${download_url}")
             flash("Front page image updated successfully")
             return redirect(url_for('index', image_url=download_url, user=user))
-
         except Exception as e:
             print(f"e in front_page_update${e}")
             flash("Error uploading the file")
             return redirect(request.url)
-
     return render_template('frontPageUpdate.html')
 
 if __name__ == '__main__':
