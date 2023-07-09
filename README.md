@@ -13,34 +13,34 @@ This repository contains the source code for the ASHE Research Paper Management 
 ## Introduction
 
 The ASHE Research Paper Management System is a web application developed using Flask, a micro web framework for Python. The system provides a platform for ASHE members to submit their research papers, which are then reviewed and published by the society. It leverages Firebase for user authentication, storage of papers and associated files, and database management.
-![Alt Text](/image/ashePage.png)
+![Alt Text](/ashe/FLASK/image/ashePage.png)
 ## Features
 
 - User authentication: Users can sign up and log in to access the system.
-![Alt Text](/image/login.png)
+![Alt Text](/ashe/FLASK//image/login.png)
 - Paper submission: Regular members can submit their research papers for review and publication.
-![Alt Text](/image/memberSubmission.png)
+![Alt Text](/ashe/FLASK//image/memberSubmission.png)
 - Paper review process: The admin user assigns reviewers to papers and decides whether to publish them.
 - Paper publication: Admin users can publish accepted papers for all members to read and download.
-![Alt Text](/image/adminPaperUpload.png)
+![Alt Text](/ashe/FLASK//image/adminPaperUpload.png)
 - Front page customization: Admin users can upload an image to be displayed on the front page.
-![Alt Text](/image/frontPageEdit.png)
+![Alt Text](/ashe/FLASK//image/frontPageEdit.png)
 
 
 ## Usage
 
 1. Upon launching the application, users will be directed to the homepage, where they can log in or sign up.
-![Alt Text](/image/login.png)
+![Alt Text](/ashe/FLASK//image/login.png)
 2. After logging in, regular members can submit their research papers by filling out the necessary details and uploading the files.
-![Alt Text](/image/memberSubmission.png)
+![Alt Text](/ashe/FLASK//image/memberSubmission.png)
 3. Admin users can view the list of submitted papers and assign reviewers to each paper.
-![Alt Text](/image/adminSubList.png)
+![Alt Text](/ashe/FLASK//image/adminSubList.png)
 4. Admin users can review the assigned papers and decide whether to publish them or reject them.
 
 5. Published papers will be accessible to all members, who can read and download them from the system.
-![Alt Text](/image/PaperSearch.png)
+![Alt Text](/ashe/FLASK//image/PaperSearch.png)
 6. Admin users can also customize the front page by uploading an image to be displayed.
-![Alt Text](/image/frontPageEdit.png)
+![Alt Text](/ashe/FLASK//image/frontPageEdit.png)
 
 ## Dependencies
 
