@@ -40,7 +40,7 @@ The ASHE Research Paper Management System is a web application developed using F
 5. Published papers will be accessible to all members, who can read and download them from the system.
 ![Alt Text](/ashe/FLASK//image/PaperSearch.png)
 6. Admin users can also customize the front page by uploading an image to be displayed.
-![Alt Text](/ashe/FLASK//image/frontPageEdit.png)
+![Alt Text](/FLASK//image/frontPageEdit.png)
 
 ## Dependencies
 
